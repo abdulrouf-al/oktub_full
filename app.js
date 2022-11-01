@@ -11,7 +11,7 @@ const flash = require('connect-flash');
 const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 const methodOverride = require('method-override'); // to delete/update blogs
 const User = require("./models/User");
-const keys = require("./config/keys");//
+//const keys = require("./config/keys");//
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 // const MongoDBStore = require('connect-mongo');
@@ -52,7 +52,7 @@ console.log('session stor error',err)});
 const secret = process.env.SECRET ||'keyboard cat'
 app.use(session({
   store:  MongoStore.create({
-    mongoUrl: process.env.dbURI|| keys.mongodb.dbURI,
+    mongoUrl: process.env.dbURI|| 'mongodb+srv://abd:text1234@nodetuts.w28wcbw.mongodb.net/note-tuts',
     secret,
     touchAfter: 24 * 3600,//// this one works in seconds not milliseconds
   }),
@@ -205,7 +205,7 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 1000;
 // database connection
 //const dbURI = 'mongodb+srv://abd:text1234@nodetuts.w28wcbw.mongodb.net/note-tuts';
-mongoose.connect(process.env.dbURI||keys.mongodb.dbURI,)// { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
+mongoose.connect(process.env.dbURI||'mongodb+srv://abd:text1234@nodetuts.w28wcbw.mongodb.net/note-tuts',)// { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
   .then((result) => app.listen(port, () => {
     console.log(`listening On Port ${port}`);//
 
