@@ -26,7 +26,7 @@ const blogRoutes = require('./routes/blogRoutes');
 const app = express();
 const ejsMate = require('ejs-mate');
 
-
+//
 
 // middleware
 app.use(express.static('public'));
