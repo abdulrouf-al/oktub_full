@@ -52,7 +52,7 @@ console.log('session stor error',err)});
 const secret = process.env.SECRET  
 app.use(session({
   store:  MongoStore.create({
-    mongoUrl: process.env.dbURI ,
+    mongoUrl: process.env.dbUrl ,
     secret,
     touchAfter: 24 * 3600,//// this one works in seconds not milliseconds
   }),
@@ -205,7 +205,7 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT;
 // database connection
 //const dbURI = 'mongodb+srv://abd:text1234@nodetuts.w28wcbw.mongodb.net/note-tuts';
-mongoose.connect(process.env.dbURI )// { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
+mongoose.connect(process.env.dbUrl )// { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
   .then((result) => app.listen(port, () => {
     console.log(`listening On Port ${port}`);//
 
