@@ -8,7 +8,43 @@ const userSchema = new Schema({
     required: [true, 'Please enter an email'],
     unique: true,
     lowercase: true,
-  }
+  },
+/*   user: {
+    firstname: String,
+    lastname: String,
+    location: String,
+    birthday: String,
+    email: String,
+    image: {type: String, default: "/images/blank-profile.png"},
+    bio: String
+},
+username: String,
+passport: String,
+
+type: Schema.Types.ObjectId,
+      ref: "User"
+
+
+ */
+
+  followers: [{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  }],
+  
+  following: [{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  }],
+
+  /* email: {
+    type: String,
+    required: [true, 'Please enter an email'],
+    unique: true,
+    lowercase: true,
+  },
+  following:[String],
+  followers:[String] */
 
 },{timestamps:true});
 

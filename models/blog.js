@@ -9,15 +9,22 @@ const blogSchema = new Schema({
     required: true,
   },
   // snippet:String         enough if there is no other parameter
-  snippet: {
+ /*  snippet: {
     type: String,
     required: true,
     defaults: "new blog"
-  },
+  }, */
   body: {
     type: String,
     required: true
   },
+  image: {type:String},
+  likes: [
+    {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }
+],
   user: {
 
     id: {

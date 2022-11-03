@@ -7,7 +7,10 @@ router.get('/create',isLoggedIn, blogController.blog_create_get);
 router.get('/', blogController.blog_index);
 router.post('/',isLoggedIn, blogController.blog_create_post);
 router.get('/:id', blogController.blog_details);
+router.get('/myblogs', blogController.blog_myblogs);
 router.delete('/:id',isLoggedIn,isAuthor, blogController.blog_delete);
+
+router.post('/:id/follow', isLoggedIn, blogController.blog_follow);
 
 router.get('/:id/edit',isLoggedIn,isAuthor, blogController.blog_edit);
 router.put('/:id',isLoggedIn,isAuthor, blogController.blog_update);

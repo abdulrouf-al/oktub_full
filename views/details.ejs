@@ -13,9 +13,6 @@
                 <%= blog.title %>
               </h3>
 
-              <!-- <p class="d-none d-sm-block text-break fs-5">
-                <%= blog.snippet %>
-              </p> -->
               <p class="d-none d-sm-block text-break fs-5">
                 <%= blog.body %>
               </p>
@@ -42,7 +39,7 @@
                </p>
             </div>
           </div>
-          <div class="d-flex flex-column flex-sm-row align-items-center mt-4"><a href="https://oktob.io/Noof1t1"
+          <div class="d-flex flex-column flex-sm-row align-items-center mt-4 justify-content-between"><a href="https://oktob.io/Noof1t1"
               class="text-black text-hover-black text-decoration-none">
               <div class="d-flex align-items-center"><span class="ms-3 ms-sm-4 text-secondary fw-bold">
                   كتبها:
@@ -67,11 +64,13 @@
               </span></a >
             
                 <% }else{ %> 
-              <a href="/blogs/<%=blog._id %>/edit"
-                class="btn f px-4 font-14px px-4  me-sm-auto mt-4 my-sm-2 btn-primary text-primary bg-white"><span
-                  class="fw-bold"><i aria-hidden="true" class="fa fa-plus"></i>
-                تابع الكاتب  
-                </span></a >
+                  <form action="/blogs/<%=blog._id %>/follow" method="post">
+                    <button type="submit" name="your_name" value="your_value"
+                      class="btn f px-4 font-14px px-4  me-sm-auto mt-4 my-sm-2 btn-primary text-primary bg-white"><span
+                        class="fw-bold"><i aria-hidden="true" class="fa fa-plus"></i>
+                        تابع الكاتب
+                      </span></a></button>
+                  </form>
                 <% } %> 
               
               </div>

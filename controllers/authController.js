@@ -10,8 +10,11 @@ const User = require("../models/User");
 }); */
 
 module.exports.signup_get = (req, res) => {
-  req.flash('success', 'flash testing signup_get ' );
+  //req.flash('success', 'flash testing signup_get ' );
   res.render('signup');
+}
+module.exports.profile_get = (req, res) => {
+   res.render('profile',{user:req.user});
 }
 //
 module.exports.login_get = (req, res) => {
@@ -22,7 +25,12 @@ module.exports.login_get = (req, res) => {
 module.exports.signup_post = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
-    const user = new User({ email, username })
+    const user = new User({
+      email,
+      username,
+      /* followers: [{}],
+      following:[{}] */
+    })
     const newUser = await User.register(user, password);
     req.login(newUser, err => {
 
@@ -43,11 +51,9 @@ module.exports.signup_post = async (req, res, next) => {
 }
 
 module.exports.login_post = (req, res) => {
-  console.log("req.session");
   req.flash('success', 'welcome');
   const redirectUrl = req.session.returnTo || '/';
   delete req.session.returnTo;
-  console.log(redirectUrl);
   res.redirect(redirectUrl);
   //res.redirect('/');
 };

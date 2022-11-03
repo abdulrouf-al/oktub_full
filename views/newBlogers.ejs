@@ -1,0 +1,61 @@
+<% layout('/layouts/boilerplate') %>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 mx-auto my-5">
+
+                <div data-next-page="https://oktob.io/i/explore/authors?page=2" class="infinite-container">
+
+                    <% if (users.length> 0) { %>
+                        <% users.forEach(user=> { %>
+                            <div class="mx-auto media media-hover p-3 p-sm-4 rounded-lg font-droid">
+                                <div class="media-body">
+                                    <div class="d-sm-flex d-block align-items-center"><a
+                                            href="https://oktob.io/FGProduction8"
+                                            class="d-flex align-items-center w-100 w-sm-75 text-hover-black text-black text-decoration-none"><img
+                                                width="50" height="50"
+                                                src="https://oktob.io/storage/36621/conversions/PoxiSJw2-cropped.jpg"
+                                                alt="FG Production" class="rounded-circle">
+                                            <div class="me-3">
+                                                <p class="mb-0 fw-bold">
+                                                    <%= user.username %>
+                                                </p>
+                                                <p class="mb-0 bio"> </p>
+                                            </div>
+                                        </a>
+                                        <div class="ms-6 mt-2 mt-sm-0 me-sm-auto"><button wire:id="qmG3GKYrnTYMKmj059CR"
+                                                wire:key="user_15043" wire:click="toggleFollow()"
+                                                class="btn font-jannaLT fs-6 px-4  btn-primary text-white">
+                                                <div class="d-flex align-items-center">
+                                                    <i aria-hidden="true" class="fa fa-plus p-1"></i>
+                                                    <span class="fw-bold">
+
+                                                        تابع
+                                                    </span>
+                                                </div>
+                                            </button></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                         <% } else { %>
+                             <p>There are no blogs to display...</p>
+                             <% } %>
+
+                           
+                </div>
+
+                
+
+                
+            </div>
+        </div>
+    </div>
+    <div class="d-flex mt-3">
+        <div id="load-more" class="load-more-btn mx-auto btn btn-primary font-14px px-4 fw-bold text-white">
+            تحميل المزيد
+        </div> <span id="spinner" class="loading-animation d-none mx-auto h1"><i aria-hidden="true"
+                class="fa fa-spinner fa-pulse"></i></span>
+        <p class="all-data-shown d-none mx-auto">
+            تم عرض جميع النتائج
+        </p>
+    </div>

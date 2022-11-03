@@ -13,6 +13,7 @@ const methodOverride = require('method-override'); // to delete/update blogs
 const User = require("./models/User");
 //const keys = require("./config/keys");//
 const session = require("express-session");
+//const path = require('path');
 const MongoStore = require('connect-mongo');
 // const MongoDBStore = require('connect-mongo');
 const passport = require("passport");
@@ -29,8 +30,8 @@ const ejsMate = require('ejs-mate');
 //
 
 // middleware
-app.use(express.static('public'));
-
+app.use(express.static('public')); // adding sass/css files
+app.use("/public", express.static('./public/'));  // adding js files
 app.use(express.urlencoded({ extended: true })); // allowing us to make POST requests
 app.use(express.json()); // allowing us to accept JSON POST responses work with express.urlencoded
 
@@ -49,10 +50,10 @@ console.log('session stor error',err)});
 */
 //const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
 
-const secret = process.env.SECRET  
+const secret = process.env.SECRET || 'keyboard cat';
 app.use(session({
   store:  MongoStore.create({
-    mongoUrl: process.env.dbUrl ,
+    mongoUrl: process.env.dbUrl ||'mongodb+srv://abd:text1234@nodetuts.w28wcbw.mongodb.net/note-tuts',
     secret,
     touchAfter: 24 * 3600,//// this one works in seconds not milliseconds
   }),
@@ -96,11 +97,9 @@ app.set('view engine', 'ejs');
 
 
 
-//TODO: catching errors when id involved 
-//TODO: deploying 
-//TODO: toggle buttons  and js files 
 
 
+ 
 app.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.success = req.flash('success');
@@ -132,8 +131,44 @@ app.use((req, res, next) => {
 /* app.get('*', checkUser); */
 app.get('/', (req, res) => res.redirect('/blogs'));
 app.get('/homePage', (req, res) => res.render('homePage'));
+
+/* app.get('/profile', (req, res) => {
+  res.render('profile',{user:req.user})
+}) */
+app.get('/newBlogers', (req, res) => {
+  User.find().sort({ createdAt: -1 })//.populate('user', 'username')
+      .then(result => {
+        //moment.locale('ar');
+        res.render('newBlogers', { users: result, });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+});
+/* 
+
+const Blog = require('./models/blog');
+const moment = require('moment'); // require 21/09/2022
+const { render } = require('ejs');
+
+app.get('/blogs/myblogs',
+  async (req, res) => {
+  //
+    await  Blog.find({user:req.user}).sort({ createdAt: -1 }).populate('user', 'username').exec()
+      .then(result => {
+        console.log(Blog.user ,req.user,)
+        moment.locale('ar');
+        res.render('myblogs', { blogs: result,moment  });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }); */
+
 app.use('/blogs', blogRoutes);
 app.use('/', authRoutes);
+
+
 
 
 /* app.get('/blogs', async (req, res) => {
@@ -191,7 +226,7 @@ app.get('/error', (req, res) => {
 
 
 app.use((req, res) => {
-  res.status(404).render('404', { title: '404' });
+  res.status(404).render('404');
 });
 
 app.use((err, req, res, next) => {
@@ -202,10 +237,10 @@ app.use((err, req, res, next) => {
   next();
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT ||1000;
 // database connection
 //const dbURI = 'mongodb+srv://abd:text1234@nodetuts.w28wcbw.mongodb.net/note-tuts';
-mongoose.connect(process.env.dbUrl )// { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
+mongoose.connect(process.env.dbUrl||'mongodb+srv://abd:text1234@nodetuts.w28wcbw.mongodb.net/note-tuts' )// { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
   .then((result) => app.listen(port, () => {
     console.log(`listening On Port ${port}`);//
 
