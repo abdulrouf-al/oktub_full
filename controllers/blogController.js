@@ -150,7 +150,7 @@ const blog_follow = async (req, res) => {
   console.log(req.user);
    res.redirect('/blogs');
 };
-
+ 
   //delete
   const blog_delete = (req, res) => {
     const id = req.params.id;
