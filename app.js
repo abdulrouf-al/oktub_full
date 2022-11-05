@@ -19,6 +19,7 @@ const MongoStore = require('connect-mongo');
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
+ 
 
 //routes
 const authRoutes = require('./routes/authRoutes');

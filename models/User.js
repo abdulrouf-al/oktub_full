@@ -9,51 +9,46 @@ const userSchema = new Schema({
     unique: true,
     lowercase: true,
   },
-/*   user: {
-    firstname: String,
-    lastname: String,
-    location: String,
-    birthday: String,
-    email: String,
-    image: {type: String, default: "/images/blank-profile.png"},
-    bio: String
-},
-username: String,
-passport: String,
-
-type: Schema.Types.ObjectId,
-      ref: "User"
-
-
- */
+  username: {
+    type: String,
+    required: [true, 'Please enter a username'],
+    unique: true,
+    lowercase: true,
+  },
+  firstName: String,
+  lastName: String,
+  bio: String,
+  image: { type: String, default: "../public/images/blank-profile-photo.jpeg" },
+  birthday: String,
 
   followers: [{
     type: Schema.Types.ObjectId,
     ref: "User",
   }],
-  
+
   following: [{
     type: Schema.Types.ObjectId,
     ref: "User",
   }],
 
-  /* email: {
-    type: String,
-    required: [true, 'Please enter an email'],
-    unique: true,
-    lowercase: true,
-  },
-  following:[String],
-  followers:[String] */
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: "Blog",
+  }],
 
-},{timestamps:true});
+  blogs: [{
+    type: Schema.Types.ObjectId,
+    ref: "Blog",
+  }]
+
+}, { timestamps: true });
 
 userSchema.plugin(passportLocalMongoose);
 
 
-const User =  mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 
-module.exports =User;
+module.exports = User;
 
 
 

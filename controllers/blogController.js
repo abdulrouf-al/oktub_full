@@ -11,8 +11,8 @@ moment.locale('en');
 
 
   //blogs
-  const blog_index = (req, res) => {
-    Blog.find().sort({ createdAt: -1 }).populate('user', 'username')
+const blog_index = async (req, res) => {
+     await Blog.find({}).sort({ createdAt: -1 })//.populate('user', 'username')
       .then(result => {
         moment.locale('ar');
         res.render('blogs', { blogs: result,moment });
@@ -23,19 +23,28 @@ moment.locale('en');
 }
   
 
-const blog_myblogs = async (req, res) => {
- 
-    await Blog.find().sort({ createdAt: -1 })//.populate('user', 'username')//.exec()user:req.user
+/* const blog_myblogs = async (req, res) => {
+  await Blog.find({userID:req.user._id}).sort({ createdAt: -1 }).populate('user', 'username')
       .then(result => {
-        console.log(Blog.user, req.user,)
+        moment.locale('ar');
+        res.render('blogs', { blogs: result,moment });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+   const myBlogs = [{}];
+  await Blog.find({user:req.user})//.sort({ createdAt: -1 })
+    //.populate('user', 'username')//.exec().user:req.user
+      .then(result => {
+        console.log(Blog.user, '**********', req.user,)
         moment.locale('ar');
         res.render('myblogs', { blogs: result, moment });
       })
       .catch(err => {
         console.log(err);
-      });
+      }); 
   
-};
+}; */
 
   //blogs/id
   const blog_details = async (req, res) => {
@@ -56,24 +65,18 @@ const blog_myblogs = async (req, res) => {
     res.render('create');
   }
   //post
-  const blog_create_post = (req, res) => {
-
+  const blog_create_post = async (req, res) => {
     //const user = new mongoose.Types.ObjectId();
     // const blog = new Blog(req.body,user );
-    var user = {
-      id: req.user._id,
-      username: req.user.username,
-      email: req.user.email
-    }
-
+    
     const blog = new Blog({
       title: req.body.title,
-      snippet: req.body.snippet,
       body: req.body.body,
-      user
-      
+      user:req.user._id,
+      username: req.user.username,
     });
-    blog.save()
+    
+    await  blog.save()
       .then(result => {
         req.flash('success', 'Your blog has been created');
         res.redirect('/blogs');
@@ -81,6 +84,9 @@ const blog_myblogs = async (req, res) => {
       .catch(err => {
         console.log(err);
       });
+      const user1 = await User.findById(req.user._id);
+      await user1.blogs.push(blog);
+      await user1.save();
   }
   //edit
 
@@ -90,7 +96,7 @@ const blog_edit = async (req, res,next) => {
     const id = req.params.id;
   const blog = await Blog.findById(id)
     .then(result => {
-    res.render('edit', { blog: result, title: 'edit blog' });
+    res.render('edit', { blog: result, });
 
     }).catch(err => {
       return next(err);
@@ -130,10 +136,9 @@ const blog_follow = async (req, res) => {
     return res.status(400)
   } 
   const blog = await Blog.findById(req.params.id);
-  const user = await User.findById(blog.user.id);
+  const user = await User.findById(blog.user);
 /* User.findById(req.params.user_id)
 .then(user => {
-  
 })  */
  // if(blog.follo) campground.reviews.push(review);
   const user2 = req.user;
@@ -142,7 +147,6 @@ const blog_follow = async (req, res) => {
   await user.save();
   await blog.save();
   await user2.save();
-  
   console.log(blog);
   console.log('*******************');
   console.log(user);
@@ -171,7 +175,7 @@ const blog_follow = async (req, res) => {
     blog_delete,
     blog_edit,
     blog_update,
-    blog_myblogs,
+    //blog_myblogs,
     blog_follow
 
   }

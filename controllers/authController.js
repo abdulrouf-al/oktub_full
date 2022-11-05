@@ -1,6 +1,8 @@
 
 const express = require('express');
 const User = require("../models/User");
+const Blog = require("../models/blog");
+const moment = require('moment')
 
 
 
@@ -13,8 +15,17 @@ module.exports.signup_get = (req, res) => {
   //req.flash('success', 'flash testing signup_get ' );
   res.render('signup');
 }
-module.exports.profile_get = (req, res) => {
-   res.render('profile',{user:req.user});
+module.exports.profile_get = async (req, res) => {
+  await Blog.find({user:req.user._id}).sort({ createdAt: -1 }).populate('user', 'username')
+      .then(result => {
+        moment.locale('ar');
+        res.render('profile', {user:req.user,blogs: result ,moment: moment});
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  
+   //res.render('profile',{user:req.user,blog: result ,moment: moment});
 }
 //
 module.exports.login_get = (req, res) => {
@@ -28,8 +39,8 @@ module.exports.signup_post = async (req, res, next) => {
     const user = new User({
       email,
       username,
-      /* followers: [{}],
-      following:[{}] */
+      image:"../public/images/blank-profile-photo.jpeg",
+      
     })
     const newUser = await User.register(user, password);
     req.login(newUser, err => {
