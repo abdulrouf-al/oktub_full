@@ -9,8 +9,10 @@ router.post('/',isLoggedIn, blogController.blog_create_post);
 router.get('/:id', blogController.blog_details);
 //router.get('/myblogs', blogController.blog_myblogs);
 router.delete('/:id',isLoggedIn,isAuthor, blogController.blog_delete);
-
 router.post('/:id/follow', isLoggedIn, blogController.blog_follow);
+router.post('/:username/follow', isLoggedIn, blogController.blog_follow_username);
+
+router.post('/:id/like', isLoggedIn, blogController.blog_like);
 
 router.get('/:id/edit',isLoggedIn,isAuthor, blogController.blog_edit);
 router.put('/:id',isLoggedIn,isAuthor, blogController.blog_update);

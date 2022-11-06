@@ -5,7 +5,19 @@ const Blog = require("../models/blog");
 const moment = require('moment')
 
 
-
+module.exports.likes_get = async (req, res) => {
+  console.log(req.user)
+  await Blog.find({_id:req.user.likes}).sort({ createdAt: -1 })//.populate('title', 'body')
+      .then(result => {
+        moment.locale('ar');
+        res.render('favorites', {user:req.user,blogs: result ,moment: moment});
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  
+   //res.render('profile',{user:req.user,blog: result ,moment: moment});
+}
 
 /* router.signup_get('/signup', (req, res) => {
   res.render('signup');
@@ -15,7 +27,20 @@ module.exports.signup_get = (req, res) => {
   //req.flash('success', 'flash testing signup_get ' );
   res.render('signup');
 }
+
+
+
+
+
 module.exports.profile_get = async (req, res) => {
+  /* 
+  await User.findOne({ username: req.params.username }, function (err, user) {
+    if (err) {
+      console.log(err);
+      res.redirect("/");
+    }
+  })
+  */
   await Blog.find({user:req.user._id}).sort({ createdAt: -1 }).populate('user', 'username')
       .then(result => {
         moment.locale('ar');

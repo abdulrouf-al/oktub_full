@@ -140,14 +140,40 @@ app.get('/newBlogers', (req, res) => {
   User.find().sort({ createdAt: -1 })//.populate('user', 'username')
       .then(result => {
         //moment.locale('ar');
-        res.render('newBlogers', { users: result, });
+        res.render('newBlogers', { users: result, username: result.username });
       })
       .catch(err => {
         console.log(err);
       });
 });
-/* 
+app.post('/:username/follow', async (req, res) => {
+  const user = await User.findByUsername(req.params.username);
 
+  if (!user.followers.includes(req.user._id)) {
+    user.followers.push(req.user._id);
+    req.user.following.push(user);
+    await user.save();
+    await req.user.save();
+    req.flash('success', `Followed ${user.username}`);
+    console.log('followed' , user.username);
+  }
+  else {
+    user.followers.pop(req.user._id);
+    req.user.following.pop(user);
+    await user.save();
+    await req.user.save();
+    req.flash('success', `unFollowed ${user.username}`);
+    console.log('unFollow', );
+  }
+  res.redirect('back');
+})
+
+
+
+
+
+
+/* 
 const Blog = require('./models/blog');
 const moment = require('moment'); // require 21/09/2022
 const { render } = require('ejs');

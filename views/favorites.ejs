@@ -4,48 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <div>
-                    <div class="my-5 d-flex flex-column align-items-center"><img width="75"
-                            src="https://www.gravatar.com/avatar/57c845443e2a6ddef0d04d1dbfc667ec?s=80&amp;d=mp&amp;r=g"
-                            alt="sham sham" class="rounded-circle">
-                        <h5 class="mt-2 mb-3 fw-bold">
-                            <%= user.username %> 
-                            <a href="https://twitter.com/nabtob" target="_blank"><i aria-hidden="true"
-                                    class="fa fa-twitter mr-2 text-primary"></i></a>
-                        </h5>
-                        <p class="mb-0 fw-bold text-secondary max-w-450px text-center">
-                            
-                        </p>
-                        <div class="mx-auto mt-3 d-flex align-items-center fs-5"><a href="#" data-toggle="modal"
-                                data-target=".followers-modal-lg"
-                                class="fw-bold text-black text-decoration-none">
-                                <%= user.followers.length %>  متابِعون
-                            </a> <span class="mx-2">
-                                |
-                            </span> <a href="#" data-toggle="modal" data-target=".followings-modal-lg"
-                                class="fw-bold text-black text-decoration-none">
-                                <%= user.following.length %> متابَعون
-                            </a></div>
-                    </div>
-                    <div class="my-5">
-                        <div class="d-flex align-items-center"><span class="fw-bold text-secondary h5">
-                                المسودات
-                            </span>
-                            <div class="mx-3 border-bottom flex-1 w-75"></div>
-                        </div>
-                        <div
-                            class="d-flex flex-column text-center mx-auto my-3 bg-white p-5 rounded-lg font-droid h5">
-                            <p>
-                                لا توجد تدوينات في المسودات
-                            </p>
-                            <p>
-                                يمكن أيضًا تصفح
-                                <a href="https://oktob.io/i/explore" class="text-decoration-none">
-                                    التدوينات الجديدة
-                                </a>
-                            </p>
-                        </div>
-                    </div>
+
                     <div class="my-5">
                         <div class="d-flex align-items-center">
                             <p class="fw-bold text-secondary h5">
@@ -55,7 +14,7 @@
                         </div>
                         
                     </div>
-                </div>
+                
                 
                 <% if (blogs.length> 0) { %>
                     <% blogs.forEach(blog=> { %>
@@ -91,7 +50,7 @@
                             <div
                             class="d-flex flex-column text-center mx-auto my-3 bg-white p-5 rounded-lg font-droid h5">
                             <p>
-                                لا توجد تدوينات منشورة لديك
+                                لا توجد تدوينات مفضلة لديك
                             </p>
                             <div id="load-more"></div>
                             <p>
