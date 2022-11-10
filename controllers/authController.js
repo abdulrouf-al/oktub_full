@@ -54,7 +54,7 @@ module.exports.profile_get = async (req, res) => {
 }
 //
 module.exports.login_get = (req, res) => {
-  req.flash('success', 'flash testing login_get');
+  //req.flash('success', 'flash testing login_get');
   res.render('login');
 }
 

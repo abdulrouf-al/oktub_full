@@ -133,7 +133,6 @@ catch (err) {
 const blog_follow_username = async (req, res) => {
   //const blog = await user.findById(req.params.id);
   const user = await User.findByUsername(req.params.username);
-
   if (!user.followers.includes(req.user._id)) {
     user.followers.push(req.user._id);
     req.user.following.push(user);
@@ -161,7 +160,7 @@ const blog_follow = async (req, res) => {
     req.flash('error', 'cant follow your self');
     return res.redirect('back');
   } */
-  if (!user.followers.includes(req.user._id)) {
+ if ( user.followers.length==0 || !user.followers.includes(req.user._id)) {
     user.followers.push(req.user._id);
     req.user.following.push(user);
     await user.save();
@@ -176,7 +175,7 @@ const blog_follow = async (req, res) => {
     await req.user.save();
     req.flash('success', 'unFollowed');
     console.log('unFollow');
-  }
+ }
   res.redirect('back');
 };
 const blog_like = async (req, res) => {

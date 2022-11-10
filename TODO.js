@@ -1,6 +1,11 @@
 //TODO: catching errors when id involved
+
 //TODO: <p> spaces
+
+//TODO:http://127.0.0.1:1000/profile http://127.0.0.1:1000/username
+
 //TODO: profile and admin/user roles
+
 //TODO: https://stackoverflow.com/questions/59798437/how-to-generate-a-slug-everytime-an-article-is-created-and-saved-in-the-database
 
 //TODO: change user schema to user id and add username to it 
@@ -61,3 +66,4 @@ router.put('/comment',requireLogin,(req,res)=>{
 //TODO: toggle buttons and js files
 //TODO: show user's blogs only
 //TODO: add blogs [{}] to all users 
+//TODO: followers/following, blogers, likes, favorites,
