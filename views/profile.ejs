@@ -5,7 +5,10 @@
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <div>
-                    <div class="my-5 d-flex flex-column align-items-center"><img width="75"
+                    <div class="my-5 d-flex flex-column align-items-center">
+                        
+                        
+                        <img width="75"
                             src="https://www.gravatar.com/avatar/57c845443e2a6ddef0d04d1dbfc667ec?s=80&amp;d=mp&amp;r=g"
                             alt="sham sham" class="rounded-circle">
                         <h5 class="mt-2 mb-3 fw-bold">
@@ -16,7 +19,17 @@
                         <p class="mb-0 fw-bold text-secondary max-w-450px text-center">
                             
                         </p>
-                        <div class="mx-auto mt-3 d-flex align-items-center fs-5"><a href="#" data-toggle="modal"
+                        <div class="mx-auto mt-3 d-flex align-items-center fs-5">
+                            <div class=" mx-4 mt-sm-0 me-sm-auto">
+                                <form action="blogs/<%= user.username %>/follow" method="post">
+                                    <button type="submit" class="btn f px-4 font-14px px-4  me-sm-auto mt-4 my-sm-2 btn-primary text-white ">
+                                      <span class="fw-bold d-flex align-items-center">
+                                        <i aria-hidden="true" class="fa fa-plus mx-1"></i>
+                                        تابع 
+                                      </span></button>
+                                  </form>
+                            </div>
+                            <a href="#" data-toggle="modal"
                                 data-target=".followers-modal-lg"
                                 class="fw-bold text-black text-decoration-none">
                                 <%= user.followers.length %>  متابِعون
@@ -25,7 +38,9 @@
                             </span> <a href="#" data-toggle="modal" data-target=".followings-modal-lg"
                                 class="fw-bold text-black text-decoration-none">
                                 <%= user.following.length %> متابَعون
-                            </a></div>
+                            </a>
+                        </div>
+                            
                     </div>
                     <div class="my-5">
                         <div class="d-flex align-items-center"><span class="fw-bold text-secondary h5">
@@ -68,7 +83,7 @@
                                 </p> 
                             </a>
 
-                                <a href="Username/Profile"
+                                <a href="<%= blog.username  %> "
                                         class="text-decoration-none text-black text-hover-black">
                                         <div class="d-flex align-items-center">
                                             <img width="45"

@@ -27,6 +27,7 @@ const blogRoutes = require('./routes/blogRoutes');
 
 const app = express();
 const ejsMate = require('ejs-mate');
+const ExpressError = require('./utils/ExpressError');
 
 //
 
@@ -146,7 +147,7 @@ app.get('/newBlogers', (req, res) => {
         console.log(err);
       });
 });
-app.post('/:username/follow', async (req, res) => {
+/* app.post('/:username/follow',  async (req, res) => {
   const user = await User.findByUsername(req.params.username);
 
   if (!user.followers.includes(req.user._id)) {
@@ -166,7 +167,7 @@ app.post('/:username/follow', async (req, res) => {
     console.log('unFollow', );
   }
   res.redirect('back');
-})
+}) */
 
 
 
@@ -251,16 +252,19 @@ app.get('/error', (req, res) => {
   user.fly(0);
 })
 
-
+/* 
 app.use((req, res) => {
   res.status(404).render('404');
-});
+}); */
+app.all('*', (req, res, next) => {
+next(new ExpressError('page not found',404));})
 
 app.use((err, req, res, next) => {
+  const { statusCode=500, message='Oops! something went wrong.' } = err;
   console.log(err.status, 500);
   console.log(err.message, 'Oops! something went wrong.');
   req.flash('error', err.message || 'Oops! something went wrong.');
-  res.status(500).redirect('back');
+  res.status(statusCode).send(message);//.redirect('back');
   next();
 });
 

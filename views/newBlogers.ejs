@@ -10,7 +10,7 @@
                             <div class="mx-auto media media-hover p-3 p-sm-4 rounded-lg font-droid">
                                 <div class="media-body">
                                     <div class="d-sm-flex d-block align-items-center"><a
-                                            href="/profile"
+                                            href="/<%= user.username %>"
                                             class="d-flex align-items-center w-100 w-sm-75 text-hover-black text-black text-decoration-none"><img
                                                 width="50" height="50"
                                                 src="<%= user.image %>"
@@ -23,7 +23,7 @@
                                             </div>
                                         </a>
                                         <div class="ms-6 mt-2 mt-sm-0 me-sm-auto">
-                                            <form action="/<%= user.username %>/follow" method="post">
+                                            <form action="blogs/<%= user.username %>/follow" method="post">
                                                 <button type="submit" class="btn f px-4 font-14px px-4  me-sm-auto mt-4 my-sm-2 btn-primary text-white ">
                                                   <span class="fw-bold d-flex align-items-center">
                                                     <i aria-hidden="true" class="fa fa-plus mx-1"></i>

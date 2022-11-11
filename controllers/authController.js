@@ -7,16 +7,16 @@ const moment = require('moment')
 
 module.exports.likes_get = async (req, res) => {
   console.log(req.user)
-  await Blog.find({_id:req.user.likes}).sort({ createdAt: -1 })//.populate('title', 'body')
-      .then(result => {
-        moment.locale('ar');
-        res.render('favorites', {user:req.user,blogs: result ,moment: moment});
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  
-   //res.render('profile',{user:req.user,blog: result ,moment: moment});
+  await Blog.find({ _id: req.user.likes }).sort({ createdAt: -1 })//.populate('title', 'body')
+    .then(result => {
+      moment.locale('ar');
+      res.render('favorites', { user: req.user, blogs: result, moment: moment });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  //res.render('profile',{user:req.user,blog: result ,moment: moment});
 }
 
 /* router.signup_get('/signup', (req, res) => {
@@ -29,30 +29,30 @@ module.exports.signup_get = (req, res) => {
 }
 
 
-
+module.exports.settings_put = (req, res) => {
+  
+}
+module.exports.settings_get = (req, res) => {
+  res.render('settings',{user: req.user})
+}
 
 
 module.exports.profile_get = async (req, res) => {
-  /* 
-  await User.findOne({ username: req.params.username }, function (err, user) {
-    if (err) {
-      console.log(err);
-      res.redirect("/");
-    }
-  })
-  */
-  await Blog.find({user:req.user._id}).sort({ createdAt: -1 }).populate('user', 'username')
-      .then(result => {
-        moment.locale('ar');
-        res.render('profile', {user:req.user,blogs: result ,moment: moment});
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+  const user1 = await User.find({ username: req.params.username }, function (err, user) {
+  }).clone();
   
-   //res.render('profile',{user:req.user,blog: result ,moment: moment});
+  console.log(user1);
+  await Blog.find({ user: user1 }).sort({ createdAt: -1 }).populate('user', 'username')
+    .then(result => {
+      moment.locale('ar');
+      res.render('profile', { user: user1[0] , blogs: result, moment: moment });
+    })
+
+  //res.render('profile',{user:req.user,blog: result ,moment: moment});
 }
-//
+
+
 module.exports.login_get = (req, res) => {
   //req.flash('success', 'flash testing login_get');
   res.render('login');
@@ -64,8 +64,8 @@ module.exports.signup_post = async (req, res, next) => {
     const user = new User({
       email,
       username,
-      image:"../public/images/blank-profile-photo.jpeg",
-      
+      image: "../public/images/blank-profile-photo.jpeg",
+
     })
     const newUser = await User.register(user, password);
     req.login(newUser, err => {
@@ -113,14 +113,14 @@ module.exports.login_post = (req, res) => {
 
 module.exports.logout_get = (req, res) => {
   //res.cookie('jwt', '', { maxAge: 1 });
-/*   req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-  })
-  req.flash('success', 'loggedOut');
-  console.log("req.session");
-  res.redirect('/homePage'); */
+  /*   req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+    })
+    req.flash('success', 'loggedOut');
+    console.log("req.session");
+    res.redirect('/homePage'); */
   req.logout(() => {
     req.flash('success', "Goodbye!");
     res.redirect('/')
