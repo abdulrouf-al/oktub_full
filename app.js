@@ -147,16 +147,18 @@ app.get('/newBlogers', (req, res) => {
         console.log(err);
       });
 });
-/* app.post('/:username/follow',  async (req, res) => {
+ app.post('/:username/follow',  async (req, res) => {
   const user = await User.findByUsername(req.params.username);
-
-  if (!user.followers.includes(req.user._id)) {
-    user.followers.push(req.user._id);
-    req.user.following.push(user);
-    await user.save();
-    await req.user.save();
-    req.flash('success', `Followed ${user.username}`);
-    console.log('followed' , user.username);
+   if (!user.followers.includes(req.user._id)) {
+     if (!req.user.id == user.id) {
+       user.followers.push(req.user._id);
+       req.user.following.push(user);
+       await user.save();
+       await req.user.save();
+       req.flash('success', `Followed ${ user.username }`);
+       console.log('followed',);
+     }
+     req.flash('error', `cant Follow your self *-* ${ user.username }`);
   }
   else {
     user.followers.pop(req.user._id);
@@ -167,7 +169,7 @@ app.get('/newBlogers', (req, res) => {
     console.log('unFollow', );
   }
   res.redirect('back');
-}) */
+}) 
 
 
 
