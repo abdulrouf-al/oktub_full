@@ -12,11 +12,11 @@ module.exports.isLoggedIn = (req, res, next) => {
 
 
 module.exports.isAuthor = async (req, res, next) => {
-  const id = req.params.id;
-  const blog = await Blog.findById(id);
-  if (!(blog.user == req.user.id)) {
+  const blog = await Blog.find({ slug: req.params.slug });
+
+  if (!(blog[0].username === req.user.username)) {
     req.flash('error', 'not allowed to edit this blog');
-    return res.redirect(`/blogs/${ id }`);
+    return res.redirect(`/blogs/${ req.params.slug }`);
   }
   next();
 }

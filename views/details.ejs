@@ -7,7 +7,7 @@
         <div class="bg-white shadow rounded-4 mx-auto mb-4 mb-sm-0 p-3 p-sm-5 rounded-lg text-justify">
 
           <div class="d-flex  media media-hover  font-droid align-items-center ">
-            <a class="text-decoration-none text-black" href="/blogs/<%= blog._id %>">
+            <a class="text-decoration-none text-black" href="/blogs/<%= blog.slug %>">
               <h3 class="h3 h-sm-5 mt-0 mb-5 fw-bold text-break">
                 <%= blog.title %>
               </h3>
@@ -23,7 +23,7 @@
               <div wire:id="3MjpEkmwxxzKopGXlLka"> <span class="me-2 mb-0 fw-bold">
                   <%= blog.likes.length %>
                 </span> 
-                <form action="/blogs/<%=blog._id %>/like" method="post" class="d-inline me-3">
+                <form action="/blogs/<%=blog.slug %>/like" method="post" class="d-inline me-3">
                   <button type="submit" class="btn f p-0 font-14px   me-sm-auto mt-4 my-sm-2 text-secondary bg-white">
                     <i aria-hidden="true" class="fa fa-heart fs-5"></i></button>
                 </form>
@@ -52,7 +52,7 @@
               href="https://oktob.io/Noof1t1" class="text-black text-hover-black text-decoration-none">
               <div class="d-flex align-items-center"><span class="ms-3 ms-sm-4 text-secondary fw-bold">
                   كتبها:
-                </span> <img width="40" src="https://oktob.io/storage/4719/conversions/mpA-MXQc-cropped.jpg"
+                </span> <img width="40" src="<%= user.image %>"
                   alt="Nouf Khalid" class="rounded-circle">
                 <div class="me-3">
                   <p class="mb-0 fw-bold">
@@ -66,14 +66,14 @@
               </div>
             </a>
             <% if(user && user.id==blog.user){ %>
-              <a href="/blogs/<%=blog._id %>/edit"
+              <a href="/blogs/<%=blog.slug %>/edit"
                 class="btn f px-4 font-14px px-4  me-sm-auto mt-4 my-sm-2 btn-primary text-primary bg-white"><span
                   class="fw-bold"><i aria-hidden="true" class="fa fa-plus"></i>
                   تحرير
                 </span></a>
 
               <% }else{ %>
-                <form action="/<%=blog._id %>/follow" method="post">
+                <form action="/blogs/<%=blog.slug %>/follow" method="post">
                   <button type="submit" class="btn f px-4 font-14px px-4  me-sm-auto mt-4 my-sm-2 btn-primary text-primary bg-white">
                     <span class="fw-bold">
                       <i aria-hidden="true" class="fa fa-plus"></i>

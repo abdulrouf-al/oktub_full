@@ -4,7 +4,7 @@ const {isLoggedIn} = require('../middleware/authMiddleware');
 const passport = require("passport");
 
 const router = Router();
-router.get('/profile', authController.profile_get);
+//router.get('/profile', authController.profile_get);
 router.get('/likes', authController.likes_get);
 
 router.get('/settings', authController.settings_get);

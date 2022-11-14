@@ -10,19 +10,19 @@
                 <% if (blogs.length> 0) { %>
                     <% blogs.forEach(blog=> { %>
                        <div class=" mx-auto media media-hover mb-4 mb-sm-0 p-3 p-sm-5 rounded-lg font-droid align-items-center">
-                            <a class="text-decoration-none text-black" href="/blogs/<%= blog._id %>">
+                            <a class="text-decoration-none text-black" href="/blogs/<%= blog.slug %>">
                                 <h3 class="h3 h-sm-5 mt-0 mb-4 fw-bold text-break"><%= blog.title %>  </h3>
                            
                                 <p class="d-none d-sm-block text-break fw-normal fs-4">
                                     <%= blog.body.slice(0, 200) %>...
                                 </p> 
                             </a>
-
-                                <a href="<%= blog.username %> "
+                           
+                            <a href="<%= blog.username %>"
                                         class="text-decoration-none text-black text-hover-black">
                                         <div class="d-flex align-items-center">
                                             <img width="45"
-                                                src="https://oktob.io/storage/4719/conversions/mpA-MXQc-cropped.jpg"
+                                                src="../public/images/blank-profile-photo.jpeg"
                                                 alt="Nouf Khalid" class="rounded-circle">
                                             <div class="mx-3">
                                                 <p class="mb-0 fw-bold"> <%= blog.username %> </p>

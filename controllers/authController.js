@@ -2,7 +2,8 @@
 const express = require('express');
 const User = require("../models/User");
 const Blog = require("../models/blog");
-const moment = require('moment')
+const moment = require('moment');
+const { populate } = require('../models/blog');
 
 
 module.exports.likes_get = async (req, res) => {
@@ -39,14 +40,14 @@ module.exports.settings_get = (req, res) => {
 
 module.exports.profile_get = async (req, res) => {
 
-  const user1 = await User.find({ username: req.params.username }, function (err, user) {
-  }).clone();//findByUsername
+  const profileUser = await User.findOne({ username: req.params.username }, function (err, user) {
+  }).clone().populate();//findByUsername
   
-  //console.log(user1);
-  await Blog.find({ user: user1 }).sort({ createdAt: -1 }).populate('user', 'username')
+  //console.log(profileUser);
+  await Blog.find({ user: profileUser }).sort({ createdAt: -1 }).populate('user', 'username')
     .then(result => {
       moment.locale('ar');
-      res.render('profile', { user: user1[0] , blogs: result, moment: moment });
+      res.render('profile', {  blogs: result, moment });//profileUser ,
     })
 
   //res.render('profile',{user:req.user,blog: result ,moment: moment});
