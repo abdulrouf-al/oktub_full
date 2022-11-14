@@ -40,9 +40,9 @@ module.exports.settings_get = (req, res) => {
 module.exports.profile_get = async (req, res) => {
 
   const user1 = await User.find({ username: req.params.username }, function (err, user) {
-  }).clone();
+  }).clone();//findByUsername
   
-  console.log(user1);
+  //console.log(user1);
   await Blog.find({ user: user1 }).sort({ createdAt: -1 }).populate('user', 'username')
     .then(result => {
       moment.locale('ar');
