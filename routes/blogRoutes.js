@@ -13,12 +13,12 @@ router.post('/',isLoggedIn, blogController.blog_create_post);
 router.delete('/:slug', isLoggedIn, isAuthor, blogController.blog_delete);
 
 
-router.get("/:slug", blogController.show);
+router.get("/slug=:slug", blogController.show);
 
 //router.get('/:slug', blogController.blog_details);
 
 router.post('/:slug/follow', isLoggedIn, blogController.blog_follow);
 router.post('/:slug/like', isLoggedIn, blogController.blog_like);
 router.get('/:slug/edit',isLoggedIn,isAuthor, blogController.blog_edit);
-router.put('/:id',isLoggedIn,isAuthor, blogController.blog_update);//bugged
+router.put('/:slug',isLoggedIn,isAuthor, blogController.blog_update);
 module.exports = router;

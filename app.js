@@ -160,7 +160,7 @@ app.get('/blogs/myblogs',
         console.log(err);
       });
   }); */
-
+/* 
   app.get('/newBlogers', (req, res) => {
     User.find().sort({ createdAt: -1 })//.populate('user', 'username')
         .then(result => {
@@ -170,7 +170,7 @@ app.get('/blogs/myblogs',
         .catch(err => {
           console.log(err);
         });
-  });
+  }); */
 app.use('/blogs', blogRoutes);
 app.use('/', authRoutes);
 

@@ -39,17 +39,15 @@ module.exports.settings_get = (req, res) => {
 
 
 module.exports.profile_get = async (req, res) => {
-
-  const profileUser = await User.findOne({ username: req.params.username }, function (err, user) {
-  }).clone().populate();//findByUsername
+  const profileUser = await User.findOne({ username: req.params.username})
+  const blogs = await Blog.find({ user: profileUser}).sort({ createdAt: -1 })
+  moment.locale('ar');
+  console.log("profileUser: ", profileUser)
+  console.log("***************************")
+  console.log("blog: ", blogs)
   
-  //console.log(profileUser);
-  await Blog.find({ user: profileUser }).sort({ createdAt: -1 }).populate('user', 'username')
-    .then(result => {
-      moment.locale('ar');
-      res.render('profile', {  blogs: result, moment });//profileUser ,
-    })
-
+  res.render("details", { user:profileUser, blogs, moment });
+  
   //res.render('profile',{user:req.user,blog: result ,moment: moment});
 }
 

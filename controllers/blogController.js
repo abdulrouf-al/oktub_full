@@ -10,7 +10,7 @@ moment.locale('en');
 const catchAsync = require("././../utils/catchAsync");
 
 const blog_mostSeen = catchAsync(async (req, res) => {
-  const blog = await Blog.find({}).sort({ seenCounter:-1})//.populate('user', 'username') .then(result => {
+  const blog = await Blog.find({}).sort({ seenCounter: -1 })//.populate('user', 'username') .then(result => {
   /*   var users = [];
     var user;
     blog.forEach(blog => {
@@ -113,8 +113,8 @@ const blog_create_post = catchAsync(async (req, res) => {
 })
 //edit
 
-const show = async (req, res, next) => {
-  await Blog.findOne({ slug: req.params.slug, })
+/* const show = async (req, res, next) => {
+  await Blog.findOne({ slug: req.params.slug })
     .then(result => {
       moment.locale('en');
       var profileUser =
@@ -133,150 +133,164 @@ const show = async (req, res, next) => {
       res.render("details", { profileUser, blog: result, moment });
     })
     .catch(next);
-}
+} */
 
-//blog_edit
-const blog_edit = catchAsync(async (req, res, next) => {
-
-  console.log('hello');
-  const blog = await Blog.findOne({ slug: req.params.slug }).exec()
-    .then(result => {
-      res.render('edit', { blog: result, });
-    }).catch(err => {
-      //return next(err);
-      if (!blog) {        //return next(new AppError('page not found', 404));
-        console.log(err);
-        req.flash('error', err.message || 'Oops! something went wrong.');
-        return res.status(500).redirect('back');
-      }
-    }
-    )
-
-});
-
-/* app.put('/blogs/:id', 
- */
-const blog_update = catchAsync(async (req, res) => {
-  console.log(req.params.slug);
-
-  await Blog.findOneAndUpdate({ slug: req.params.slug }, req.body, { runValidators: true, new: true })//...req.body.result
-    .then(result => {
-      //Blog.updateOne().exec();
-      console.log(result.slug);
-      res.redirect(`/blogs/${ result.slug }`)//      res.redirect(`/blogs/${blog.id}`);
-
-    }).catch(err => {
-      console.log(err);
-    });
-});
-
-
-
-/* 
-try {
-}
-catch (err) {
-  next(err);  //will fire 'app.use((err, req, res, next) => {' from the app.js
-}
-
-*/
-const blog_follow_username = catchAsync(async (req, res) => {
-  //const blog = await user.findById(req.params.id);
-  const user = await User.findByUsername(req.params.username);
-  console.log("sdadasdasdasdasdasd")
-  console.log(user)
-  if (user.followers.length == 0 || !user.followers.includes(req.user._id)) {
-    user.followers.push(req.user._id);
-    req.user.following.push(user);
-    await user.save();
-    await req.user.save();
-    req.flash('success', 'Followed');
-    console.log('followed');
+const show =  catchAsync( async (req, res, next) => {
+  const blog = await Blog.findOne({ slug: req.params.slug })
+  const profileUser = await User.findOne({ username: blog.username })
+  if (!blog.seenUsers.includes(req.user._id)) {
+    blog.seenUsers.push(req.user._id);
+    blog.seenCounter++;
+    blog.save();
   }
-  else {
-    user.followers.pop(req.user._id);
-    req.user.following.pop(user);
-    await user.save();
-    await req.user.save();
-    req.flash('success', 'unFollowed');
-    console.log('unFollow');
-  }
-  res.redirect('/back');
-});
+  console.log("profileUser: ", profileUser)
+  console.log("***************************")
+  console.log("blog: ", blog)
+  res.render("details", { profileUser, blog , moment });
 
-const blog_follow = catchAsync(async (req, res) => {
-  const blog = await Blog.findOne({ slug: req.params.slug });
-  const user = await User.findById(blog.user);
-  /* if (blog.user == req.user._id) {
-    console.log('cant follow your self');
-    req.flash('error', 'cant follow your self');  4254
-    return res.redirect('back');
-  } */
-  if (user.followers.length == 0 || !user.followers.includes(req.user._id)) {
-    user.followers.push(req.user._id);
-    req.user.following.push(user);
-    await user.save();
-    await req.user.save();
-    req.flash('success', 'Followed');
-    console.log('followed');
-  }
-  else {
-    user.followers.pop(req.user._id);
-    req.user.following.pop(user);
-    await user.save();
-    await req.user.save();
-    req.flash('success', 'unFollowed');
-    console.log('unFollow');
-  }
-  res.redirect('back');
-});
-
-const blog_like = catchAsync(async (req, res) => {
-  const blog = await Blog.findOne({ slug: req.params.slug });
-  console.log(blog)
-  //const user = await User.findById(blog.user);
-  if (!blog.likes.includes(req.user._id)) {
-    blog.likes.push(req.user._id);
-    req.user.likes.push(blog);
-    await blog.save();
-    await req.user.save();
-    console.log('like');
-  }
-  else {
-    blog.likes.pop(req.user._id);
-    req.user.likes.pop(blog);
-    await blog.save();
-    await req.user.save();
-    console.log('unlike');
-  }
-  res.redirect('back');
-});
-
-//delete
-const blog_delete = catchAsync(async (req, res) => {
-  await Blog.findOneAndDelete({ slug: req.params.slug })
-    .then(result => {
-      // result.deleteOne();
-      res.redirect('/');
-    })
-    .catch(err => {
-      console.log(err);
-    });
 })
+  //blog_edit
+  const blog_edit = catchAsync(async (req, res, next) => {
 
-module.exports = {
-  blog_index,
-  blog_details,
-  blog_create_get,
-  blog_create_post,
-  blog_delete,
-  blog_edit,
-  blog_update,
-  //blog_myblogs,
-  blog_follow,
-  blog_follow_username,
-  blog_like
-  , show
-  ,blog_mostSeen
+    console.log('hello');
+    const blog = await Blog.findOne({ slug: req.params.slug }).exec()
+      .then(result => {
+        res.render('edit', { blog: result, });
+      }).catch(err => {
+        //return next(err);
+        if (!blog) {        //return next(new AppError('page not found', 404));
+          console.log(err);
+          req.flash('error', err.message || 'Oops! something went wrong.');
+          return res.status(500).redirect('back');
+        }
+      }
+      )
 
-}
+  });
+
+  /* app.put('/blogs/:id', 
+   */
+  const blog_update = catchAsync(async (req, res) => {
+    console.log(req.params.slug);
+
+    await Blog.findOneAndUpdate({ slug: req.params.slug }, req.body, { runValidators: true, new: true })//...req.body.result
+      .then(result => {
+        //Blog.updateOne().exec();
+        console.log(result.slug);
+        res.redirect(`/blogs/${ result.slug }`)//      res.redirect(`/blogs/${blog.id}`);
+
+      }).catch(err => {
+        console.log(err);
+      });
+  });
+
+
+
+  /* 
+  try {
+  }
+  catch (err) {
+    next(err);  //will fire 'app.use((err, req, res, next) => {' from the app.js
+  }
+  
+  */
+  const blog_follow_username = catchAsync(async (req, res) => {
+    //const blog = await user.findById(req.params.id);
+    const user = await User.findByUsername(req.params.username);
+    console.log("sdadasdasdasdasdasd")
+    console.log(user)
+    if (user.followers.length == 0 || !user.followers.includes(req.user._id)) {
+      user.followers.push(req.user._id);
+      req.user.following.push(user);
+      await user.save();
+      await req.user.save();
+      req.flash('success', 'Followed');
+      console.log('followed');
+    }
+    else {
+      user.followers.pop(req.user._id);
+      req.user.following.pop(user);
+      await user.save();
+      await req.user.save();
+      req.flash('success', 'unFollowed');
+      console.log('unFollow');
+    }
+    res.redirect('/back');
+  });
+
+  const blog_follow = catchAsync(async (req, res) => {
+    const blog = await Blog.findOne({ slug: req.params.slug });
+    const user = await User.findById(blog.user);
+    /* if (blog.user == req.user._id) {
+      console.log('cant follow your self');
+      req.flash('error', 'cant follow your self');  4254
+      return res.redirect('back');
+    } */
+    if (user.followers.length == 0 || !user.followers.includes(req.user._id)) {
+      user.followers.push(req.user._id);
+      req.user.following.push(user);
+      await user.save();
+      await req.user.save();
+      req.flash('success', 'Followed');
+      console.log('followed');
+    }
+    else {
+      user.followers.pop(req.user._id);
+      req.user.following.pop(user);
+      await user.save();
+      await req.user.save();
+      req.flash('success', 'unFollowed');
+      console.log('unFollow');
+    }
+    res.redirect('back');
+  });
+
+  const blog_like = catchAsync(async (req, res) => {
+    const blog = await Blog.findOne({ slug: req.params.slug });
+    console.log(blog)
+    //const user = await User.findById(blog.user);
+    if (!blog.likes.includes(req.user._id)) {
+      blog.likes.push(req.user._id);
+      req.user.likes.push(blog);
+      await blog.save();
+      await req.user.save();
+      console.log('like');
+    }
+    else {
+      blog.likes.pop(req.user._id);
+      req.user.likes.pop(blog);
+      await blog.save();
+      await req.user.save();
+      console.log('unlike');
+    }
+    res.redirect('back');
+  });
+
+  //delete
+  const blog_delete = catchAsync(async (req, res) => {
+    await Blog.findOneAndDelete({ slug: req.params.slug })
+      .then(result => {
+        // result.deleteOne();
+        res.redirect('/');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  })
+
+  module.exports = {
+    blog_index,
+    blog_details,
+    blog_create_get,
+    blog_create_post,
+    blog_delete,
+    blog_edit,
+    blog_update,
+    //blog_myblogs,
+    blog_follow,
+    blog_follow_username,
+    blog_like
+    , show
+    , blog_mostSeen
+
+  }

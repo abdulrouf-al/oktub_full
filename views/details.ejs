@@ -7,7 +7,7 @@
         <div class="bg-white shadow rounded-4 mx-auto mb-4 mb-sm-0 p-3 p-sm-5 rounded-lg text-justify">
 
           <div class="d-flex  media media-hover  font-droid align-items-center ">
-            <a class="text-decoration-none text-black" href="/blogs/<%= blog.slug %>">
+            <a class="text-decoration-none text-black" href="/blogs/slug=<%= blog.slug %>">
               <h3 class="h3 h-sm-5 mt-0 mb-5 fw-bold text-break">
                 <%= blog.title %>
               </h3>
@@ -52,7 +52,7 @@
               href="https://oktob.io/Noof1t1" class="text-black text-hover-black text-decoration-none">
               <div class="d-flex align-items-center"><span class="ms-3 ms-sm-4 text-secondary fw-bold">
                   كتبها:
-                </span> <img width="40" src="<%= user.image %>"
+                </span> <img width="40" src="<%= profileUser.image %>"
                   alt="Nouf Khalid" class="rounded-circle">
                 <div class="me-3">
                   <p class="mb-0 fw-bold">
