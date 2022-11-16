@@ -160,32 +160,21 @@ app.get('/blogs/myblogs',
         console.log(err);
       });
   }); */
-/* 
-  app.get('/newBlogers', (req, res) => {
-    User.find().sort({ createdAt: -1 })//.populate('user', 'username')
-        .then(result => {
-          //moment.locale('ar');
-          res.render('newBlogers', { users: result, username: result.username });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-  }); */
+
+
 app.use('/blogs', blogRoutes);
 app.use('/', authRoutes);
 
-/*   app.post('/:username/follow',  async (req, res) => {
+/*    app.post('/:username/follow',  async (req, res) => {
    const user = await User.findByUsername(req.params.username);
    //if (!req.user.id == user.id) {
    if (!user.followers.includes(req.user._id)) {
-     
        user.followers.push(req.user._id);
        req.user.following.push(user);
        await user.save();
        await req.user.save();
        req.flash('success', `Followed ${ user.username }`);
        console.log('followed',);
-    
   }
   else {
     user.followers.pop(req.user._id);
@@ -197,7 +186,7 @@ app.use('/', authRoutes);
      }
      res.redirect('back');
   //  }req.flash('error', `cant Follow your self *-* ${ user.username }`);
-}) */  
+})   */
 
 
 /* app.get('/blogs', async (req, res) => {

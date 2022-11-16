@@ -9,10 +9,10 @@
                         
                         
                         <img width="75"
-                            src="<%=user.image %>"
+                            src="<%=profileUser.image %>"
                             alt="sham sham" class="rounded-circle">
                         <h5 class="mt-2 mb-3 fw-bold">
-                            <%= user.username %> 
+                            <%= profileUser.username %> 
                             <a href="https://twitter.com/nabtob" target="_blank"><i aria-hidden="true"
                                     class="fa fa-twitter mr-2 text-primary"></i></a>
                         </h5>
@@ -21,7 +21,7 @@
                         </p>
                         <div class="mx-auto mt-3 d-flex align-items-center fs-5">
                             <div class=" mx-4 mt-sm-0 me-sm-auto">
-                                <form action="/<%= user.username %>/follow" method="post">
+                                <form action="/blogs/<%= profileUser.username %>/follow" method="post">
                                     <button type="submit" class="btn f px-4 font-14px px-4  me-sm-auto mt-4 my-sm-2 btn-primary text-white ">
                                       <span class="fw-bold d-flex align-items-center">
                                         <i aria-hidden="true" class="fa fa-plus mx-1"></i>
@@ -32,12 +32,12 @@
                             <a href="#" data-toggle="modal"
                                 data-target=".followers-modal-lg"
                                 class="fw-bold text-black text-decoration-none">
-                                <%= user.followers.length %>  متابِعون
+                                <%= profileUser.followers.length %>  متابِعون
                             </a> <span class="mx-2">
                                 |
                             </span> <a href="#" data-toggle="modal" data-target=".followings-modal-lg"
                                 class="fw-bold text-black text-decoration-none">
-                                <%= user.following.length %> متابَعون
+                                <%= profileUser.following.length %> متابَعون
                             </a>
                         </div>
                             
@@ -75,7 +75,7 @@
                 <% if (blogs.length> 0) { %>
                     <% blogs.forEach(blog=> { %>
                        <div class=" mx-auto media media-hover mb-4 mb-sm-0 p-3 p-sm-5 rounded-lg font-droid align-items-center">
-                            <a class="text-decoration-none text-black" href="/blogs/<%= blog.slug %>">
+                            <a class="text-decoration-none text-black" href="/blogs/post=<%= blog.slug %>">
                                 <h3 class="h3 h-sm-5 mt-0 mb-4 fw-bold text-break"><%= blog.title %>  </h3>
                            
                                 <p class="d-none d-sm-block text-break fw-normal fs-4">

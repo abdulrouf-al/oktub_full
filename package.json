@@ -24,6 +24,7 @@
     "moment": "^2.29.4",
     "mongoose": "^6.7.0",
     "mongoose-slug-generator": "^1.0.4",
+    "mongoose-slug-updater": "^3.3.0",
     "nodemon": "^2.0.20",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",

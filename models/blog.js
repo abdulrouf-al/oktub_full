@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-var slug = require('mongoose-slug-generator')
+var slug = require('mongoose-slug-updater')
 
 // to create a model 
 mongoose.plugin(slug);
@@ -13,7 +13,8 @@ const blogSchema = new Schema({
     type: String,
     required: true
   },
-  image: {type:String},
+  image: { type: String },
+  userImage:{ type: String },
   likes: [
     {
         type: Schema.Types.ObjectId,
@@ -26,7 +27,7 @@ const blogSchema = new Schema({
   },
   username: String,
   //slug: { type: "String", slug: "title", unique: true }
-  slug: { type: String, slug: "title", unique: true },
+  slug: { type: String, slug: ["title"], unique: true },
   seenUsers: [{
     type: Schema.Types.ObjectId,
     ref: "User"

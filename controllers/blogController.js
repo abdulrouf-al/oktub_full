@@ -26,18 +26,16 @@ const blog_mostSeen = catchAsync(async (req, res) => {
 
 //blogs
 const blog_index = catchAsync(async (req, res) => {
-  const blog = await Blog.find({}).sort({ createdAt: -1 })//.populate('user', 'username') .then(result => {
-  /*   var users = [];
-    var user;
-    blog.forEach(blog => {
-      users.push( User.findByUsername(blog.username));
-      console.log(User.findByUsername(blog.username))
-    }); */
-  //console.log(users)
-  // console.log(users[0].image)
+  const blogs = await Blog.find({}).sort({ createdAt: -1 })//.populate('user', 'username') .then(result => {
+    /* for (let blog of blogs) {
+      image = await User.findByUsername(blog.username);
+      blog.userImage = image.image;
+      console.log(blog.userImage)
+    };  */
+
+  console.log()
   moment.locale('ar');
-  //console.log(result)
-  res.render('blogs', { blogs: blog, moment });
+  res.render('blogs', { blogs: blogs, moment });
 })
 /* .catch(err => {
   console.log(err);
@@ -69,7 +67,7 @@ const blog_index = catchAsync(async (req, res) => {
 }; */
 
 //blogs/id
-const blog_details = catchAsync(async (req, res) => {
+/* const blog_details = catchAsync(async (req, res) => {
   //const blog = await Blog.findById(id).populate('user');//.populate('user') &&  Blog.comments.push(comment);
   await Blog.find({ slug: req.params.slug })
     .then(result => {
@@ -81,7 +79,7 @@ const blog_details = catchAsync(async (req, res) => {
       console.log(err);
       res.render('404', { title: 'Blog not found' });
     });
-})
+}) */
 //blogs/create
 const blog_create_get = (req, res) => {
   res.render('create');
@@ -90,13 +88,13 @@ const blog_create_get = (req, res) => {
 const blog_create_post = catchAsync(async (req, res) => {
   //const user = new mongoose.Types.ObjectId();
   // const blog = new Blog(req.body,user );
-
   const blog = new Blog({
     title: req.body.title,
     body: req.body.body,
     user: req.user._id,
     username: req.user.username,
-    seenCounter: 0
+    seenCounter: 0,
+    userImage:req.user.image
 
   });
   await blog.save()
@@ -135,17 +133,15 @@ const blog_create_post = catchAsync(async (req, res) => {
     .catch(next);
 } */
 
-const show =  catchAsync( async (req, res, next) => {
+const show = catchAsync(async (req, res, next) => {
   const blog = await Blog.findOne({ slug: req.params.slug })
   const profileUser = await User.findOne({ username: blog.username })
-  if (!blog.seenUsers.includes(req.user._id)) {
+  
+  if (!blog.seenUsers.includes(req.user._id)) {//req.ip
     blog.seenUsers.push(req.user._id);
     blog.seenCounter++;
     blog.save();
   }
-  console.log("profileUser: ", profileUser)
-  console.log("***************************")
-  console.log("blog: ", blog)
   res.render("details", { profileUser, blog , moment });
 
 })
@@ -171,13 +167,13 @@ const show =  catchAsync( async (req, res, next) => {
   /* app.put('/blogs/:id', 
    */
   const blog_update = catchAsync(async (req, res) => {
-    console.log(req.params.slug);
-
     await Blog.findOneAndUpdate({ slug: req.params.slug }, req.body, { runValidators: true, new: true })//...req.body.result
       .then(result => {
+        
+
         //Blog.updateOne().exec();
         console.log(result.slug);
-        res.redirect(`/blogs/${ result.slug }`)//      res.redirect(`/blogs/${blog.id}`);
+        res.redirect(`/blogs/post=${ result.slug }`)//      res.redirect(`/blogs/${blog.id}`);
 
       }).catch(err => {
         console.log(err);
@@ -195,37 +191,14 @@ const show =  catchAsync( async (req, res, next) => {
   
   */
   const blog_follow_username = catchAsync(async (req, res) => {
-    //const blog = await user.findById(req.params.id);
     const user = await User.findByUsername(req.params.username);
-    console.log("sdadasdasdasdasdasd")
-    console.log(user)
-    if (user.followers.length == 0 || !user.followers.includes(req.user._id)) {
-      user.followers.push(req.user._id);
-      req.user.following.push(user);
-      await user.save();
-      await req.user.save();
-      req.flash('success', 'Followed');
-      console.log('followed');
-    }
-    else {
-      user.followers.pop(req.user._id);
-      req.user.following.pop(user);
-      await user.save();
-      await req.user.save();
-      req.flash('success', 'unFollowed');
-      console.log('unFollow');
-    }
-    res.redirect('/back');
-  });
-
-  const blog_follow = catchAsync(async (req, res) => {
-    const blog = await Blog.findOne({ slug: req.params.slug });
-    const user = await User.findById(blog.user);
-    /* if (blog.user == req.user._id) {
+    console.log(user._id)
+    
+    if (user._id.equals( req.user._id)) {
       console.log('cant follow your self');
-      req.flash('error', 'cant follow your self');  4254
+      req.flash('error', 'cant follow your self'); 
       return res.redirect('back');
-    } */
+    } 
     if (user.followers.length == 0 || !user.followers.includes(req.user._id)) {
       user.followers.push(req.user._id);
       req.user.following.push(user);
@@ -245,9 +218,43 @@ const show =  catchAsync( async (req, res, next) => {
     res.redirect('back');
   });
 
-  const blog_like = catchAsync(async (req, res) => {
+/*   const blog_follow = catchAsync(async (req, res) => {
     const blog = await Blog.findOne({ slug: req.params.slug });
-    console.log(blog)
+    const user = await User.findById(blog.user);
+
+    if (user.followers.length == 0 || !user.followers.includes(req.user._id)) {
+      user.followers.push(req.user._id);
+      req.user.following.push(user);
+      await user.save();
+      await req.user.save();
+      req.flash('success', 'Followed');
+      console.log('followed');
+    }
+    else {
+      user.followers.pop(req.user._id);
+      req.user.following.pop(user);
+      await user.save();
+      await req.user.save();
+      req.flash('success', 'unFollowed');
+      console.log('unFollow');
+    }
+    res.redirect('back');
+  }); */
+
+
+ const newBlogers= (req, res) => {
+    User.find().sort({ createdAt: -1 })//.populate('user', 'username')
+        .then(result => {
+          //moment.locale('ar');
+          res.render('newBlogers', { users: result, username: result.username });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  };
+
+   const blog_like = catchAsync(async (req, res) => {
+    const blog = await Blog.findOne({ slug: req.params.slug });
     //const user = await User.findById(blog.user);
     if (!blog.likes.includes(req.user._id)) {
       blog.likes.push(req.user._id);
@@ -264,7 +271,7 @@ const show =  catchAsync( async (req, res, next) => {
       console.log('unlike');
     }
     res.redirect('back');
-  });
+  }); 
 
   //delete
   const blog_delete = catchAsync(async (req, res) => {
@@ -280,17 +287,18 @@ const show =  catchAsync( async (req, res, next) => {
 
   module.exports = {
     blog_index,
-    blog_details,
+    //blog_details,
     blog_create_get,
     blog_create_post,
     blog_delete,
     blog_edit,
     blog_update,
     //blog_myblogs,
-    blog_follow,
+   // blog_follow,
     blog_follow_username,
-    blog_like
-    , show
-    , blog_mostSeen
+    blog_like,
+     show
+    , blog_mostSeen,
+    newBlogers
 
   }

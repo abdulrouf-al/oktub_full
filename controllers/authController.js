@@ -7,7 +7,7 @@ const { populate } = require('../models/blog');
 
 
 module.exports.likes_get = async (req, res) => {
-  console.log(req.user)
+  console.log("from likes-get",req.user)
   await Blog.find({ _id: req.user.likes }).sort({ createdAt: -1 })//.populate('title', 'body')
     .then(result => {
       moment.locale('ar');
@@ -18,6 +18,12 @@ module.exports.likes_get = async (req, res) => {
     });
 
   //res.render('profile',{user:req.user,blog: result ,moment: moment});
+}
+module.exports.statistics = async (req, res) => { 
+  const blogs = await Blog.find({ user: req.user._id }).sort({ createdAt: -1 })
+ // console.log(_id )
+  console.log(blogs )
+  res.render('statistics', { blogs});
 }
 
 /* router.signup_get('/signup', (req, res) => {
@@ -44,10 +50,9 @@ module.exports.profile_get = async (req, res) => {
   moment.locale('ar');
   console.log("profileUser: ", profileUser)
   console.log("***************************")
-  console.log("blog: ", blogs)
   
-  res.render("details", { user:profileUser, blogs, moment });
-  
+  res.render("profile", { profileUser, blogs, moment });
+
   //res.render('profile',{user:req.user,blog: result ,moment: moment});
 }
 
