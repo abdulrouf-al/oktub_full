@@ -31,7 +31,8 @@ const blogSchema = new Schema({
   seenUsers: [{
     type: Schema.Types.ObjectId,
     ref: "User"
-}],
+  }],
+  seenIp: [String],
   seenCounter: Number
  
 }, { timestamps: true });

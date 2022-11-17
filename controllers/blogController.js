@@ -149,7 +149,9 @@ const show = catchAsync(async (req, res, next) => {
       blog.save();
     }
   }
-  
+  console.log(blog.seenUsers)
+  console.log(blog.seenIp)
+  console.log(blog.seenCounter)
   res.render("details", { profileUser, blog, moment });
 
 })
