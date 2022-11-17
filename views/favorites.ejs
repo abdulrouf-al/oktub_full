@@ -8,7 +8,7 @@
                     <div class="my-5">
                         <div class="d-flex align-items-center">
                             <p class="fw-bold text-secondary h5">
-                                تدوينات منشورة
+                             favorites blogs
                             </p>
                             <div class="mx-3 border-bottom flex-1 w-75"></div>
                         </div>
@@ -31,7 +31,7 @@
                                         class="text-decoration-none text-black text-hover-black">
                                         <div class="d-flex align-items-center">
                                             <img width="45"
-                                                src="https://oktob.io/storage/4719/conversions/mpA-MXQc-cropped.jpg"
+                                                src="<%= blog.userImage %> "
                                                 alt="Nouf Khalid" class="rounded-circle">
                                             <div class="mx-3">
                                                 <p class="mb-0 fw-bold"> <%= blog.username %> </p>
@@ -50,13 +50,13 @@
                             <div
                             class="d-flex flex-column text-center mx-auto my-3 bg-white p-5 rounded-lg font-droid h5">
                             <p>
-                                لا توجد تدوينات مفضلة لديك
+                               no favorites blogs
                             </p>
                             <div id="load-more"></div>
                             <p>
-                                يمكن أيضًا تصفح
-                                <a href="https://oktob.io/i/explore"  class="text-decoration-none">
-                                    التدوينات الجديدة
+                               you can go to 
+                                <a href="/"  class="text-decoration-none">
+                                   recent blogs
                                 </a>
                             </p>
                         </div>

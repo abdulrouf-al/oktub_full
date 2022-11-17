@@ -2,15 +2,21 @@ const { Router } = require('express');
 const authController = require('../controllers/authController');
 const {isLoggedIn} = require('../middleware/authMiddleware');
 const passport = require("passport");
+const multer = require('multer')
+const { storage } = require('../cloudinary/cloudinary');
+const upload = multer({ storage })
+
+    
 
 const router = Router();
 //router.get('/profile', authController.profile_get);
+router.get('/username=:username', authController.profile_get);
 router.get('/likes', authController.likes_get);
 router.get('/statistics',isLoggedIn, authController.statistics);
 
 
 router.get('/settings',isLoggedIn, authController.settings_get);
-router.put('/settings',isLoggedIn, authController.settings_put);
+router.put('/settings',isLoggedIn,upload.single('imageInput'), authController.settings_put);// if we need to upload multiple images we change 'single' to array and we add ' multiple to the image input in ejs file
 
 router.get('/signup', authController.signup_get);
 router.post('/signup', authController.signup_post);
@@ -20,7 +26,6 @@ passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' ,
 authController.login_post); 
 
 router.get('/logout', isLoggedIn, authController.logout_get); 
-router.get('/username=:username', authController.profile_get);
 
 router.get('/test', (req, res) => {
     console.log("adsa")

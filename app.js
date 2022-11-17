@@ -1,8 +1,8 @@
 
-/* if (process.env.NODE_ENV !== "production") {
+ if (process.env.NODE_ENV !== "production") {
   require('dotenv').config();
-} */
-
+} 
+//console.log(process.env.dbURI)
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -104,7 +104,7 @@ app.set('view engine', 'ejs');
 
  
 app.use((req, res, next) => {
-  res.locals.user = req.user;
+  res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   res.locals.message = req.flash.message;

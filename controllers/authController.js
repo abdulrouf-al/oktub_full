@@ -3,20 +3,24 @@ const express = require('express');
 const User = require("../models/User");
 const Blog = require("../models/blog");
 const moment = require('moment');
+const catchAsync = require("././../utils/catchAsync");
 const { populate } = require('../models/blog');
-
+const multer = require('multer')
+const { storage } = require('../cloudinary/cloudinary');
+const upload = multer({ storage })
+ 
+//const parser = multer({ storage: storage });
 
 module.exports.likes_get = async (req, res) => {
   console.log("from likes-get",req.user)
   await Blog.find({ _id: req.user.likes }).sort({ createdAt: -1 })//.populate('title', 'body')
     .then(result => {
-      moment.locale('ar');
+      moment.locale('en');
       res.render('favorites', { user: req.user, blogs: result, moment: moment });
     })
     .catch(err => {
       console.log(err);
     });
-
   //res.render('profile',{user:req.user,blog: result ,moment: moment});
 }
 module.exports.statistics = async (req, res) => { 
@@ -26,20 +30,27 @@ module.exports.statistics = async (req, res) => {
   res.render('statistics', { blogs});
 }
 
-/* router.signup_get('/signup', (req, res) => {
-  res.render('signup');
-}); */
-
 module.exports.signup_get = (req, res) => {
   //req.flash('success', 'flash testing signup_get ' );
   res.render('signup');
 }
 
+module.exports.settings_put =catchAsync( async(req, res) => {
+  const user = await User.findOneAndUpdate({_id:req.user._id},req.body,{ runValidators: true, new: true })//
+  //const { username, email, password } = req.body;
+  const blogs = await Blog.find({ user: user });
+  for (let blog of blogs) {
+    blog.userImage = req.file.path;
+    blog.save();
+  }
+  user.image = req.file.path;
+  user.save();
+  //res.json(req.file);
+  res.redirect('back');
+})
 
-module.exports.settings_put = (req, res) => {
-  
-}
 module.exports.settings_get = (req, res) => {
+
   res.render('settings',{user: req.user})
 }
 
@@ -47,12 +58,8 @@ module.exports.settings_get = (req, res) => {
 module.exports.profile_get = async (req, res) => {
   const profileUser = await User.findOne({ username: req.params.username})
   const blogs = await Blog.find({ user: profileUser}).sort({ createdAt: -1 })
-  moment.locale('ar');
-  console.log("profileUser: ", profileUser)
-  console.log("***************************")
-  
+  moment.locale('en');
   res.render("profile", { profileUser, blogs, moment });
-
   //res.render('profile',{user:req.user,blog: result ,moment: moment});
 }
 

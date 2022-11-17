@@ -19,7 +19,7 @@ const blog_mostSeen = catchAsync(async (req, res) => {
     }); */
   //console.log(users)
   // console.log(users[0].image)
-  moment.locale('ar');
+  moment.locale('en');
   //console.log(result)
   res.render('blogs', { blogs: blog, moment });
 })
@@ -33,7 +33,7 @@ const blog_index = catchAsync(async (req, res) => {
     console.log(blog.userImage)
   };  */
 
-  moment.locale('ar');
+  moment.locale('en');
   res.render('blogs', { blogs: blogs, moment });
 })
 /* .catch(err => {
@@ -140,13 +140,13 @@ const show = catchAsync(async (req, res, next) => {
     if (!blog.seenUsers.includes(req.user._id)) {//req.ip
       blog.seenUsers.push(req.user._id);
       blog.seenCounter++;
-      blog.save();
+     await blog.save();
     }
   } else {
     if (!blog.seenIp.includes(req.ip)) {
       blog.seenIp.push(req.ip);
       blog.seenCounter++;
-      blog.save();
+      await blog.save();
     }
   }
   console.log(blog.seenUsers)
@@ -252,16 +252,16 @@ const blog_follow_username = catchAsync(async (req, res) => {
   }); */
 
 
-const newBlogers = (req, res) => {
-  User.find().sort({ createdAt: -1 })//.populate('user', 'username')
+const newBlogers = catchAsync( async (req, res) => {
+ await User.find().sort({ createdAt: -1 })//.populate('user', 'username')
     .then(result => {
       //moment.locale('ar');
-      res.render('newBlogers', { users: result, username: result.username });
+      res.render('newBlogers', { users: result });
     })
     .catch(err => {
       console.log(err);
     });
-};
+});
 
 const blog_like = catchAsync(async (req, res) => {
   const blog = await Blog.findOne({ slug: req.params.slug });

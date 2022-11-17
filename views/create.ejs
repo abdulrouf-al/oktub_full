@@ -2,19 +2,19 @@
 
 
 
-<div class="container lead" dir="rtl">
+<div class="container lead" >
   <div class="row">
     <div class="col-lg-10 mx-auto my-5">
-  <div class="create-blog content" dir="rtl" >
+  <div class="create-blog content"  >
     <!-- this action="/blogs" should be same with the parameter in app.post -->
     <form action="/blogs" method="POST">
-      <label for="title">العنوان:</label>
+      <label for="title">title:</label>
       <input class="form-control mb-3" type="text" id="title" name="title" required>
       <!-- <label for="snippet">مقتطف من التدوينة </label>
       <input class="form-control mb-3" type="text" id="snippet" name="snippet" required> -->
-      <label for="body">التدوينة</label>
+      <label for="body">body:</label>
       <textarea class="form-control mb-3" id="body" name="body" style="width: 380px;height: 300px;" required></textarea>
-      <button class="btn btn-secondary">انشر</button>
+      <button class="btn btn-secondary">post</button>
     </form>
   </div>
 

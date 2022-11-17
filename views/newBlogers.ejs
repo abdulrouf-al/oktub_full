@@ -3,53 +3,57 @@
         <div class="row">
             <div class="col-lg-9 mx-auto my-5">
 
-                <div data-next-page="https://oktob.io/i/explore/authors?page=2" class="infinite-container">
+                <div data-next-page="/" class="infinite-container">
 
                     <% if (users.length> 0) { %>
-                        <% users.forEach(user=> { %>
-                            <div class="mx-auto media media-hover p-3 p-sm-4 rounded-lg font-droid">
-                                <div class="media-body">
-                                    <div class="d-sm-flex d-block align-items-center"><a
-                                            href="/<%= user.username %>"
-                                            class="d-flex align-items-center w-100 w-sm-75 text-hover-black text-black text-decoration-none"><img
-                                                width="50" height="50"
-                                                src="../public/images/blank-profile-photo.jpeg"
-                                                alt="FG Production" class="rounded-circle">
-                                            <div class="me-3">
-                                                <p class="mb-0 fw-bold">
-                                                    <%= user.username %>
-                                                </p>
-                                                <p class="mb-0 bio"> </p>
+                        <% users.forEach(user1=> { %>
+                           
+                                <% if( currentUser && user1.username==currentUser.username) {} else { %>
+                                    <div class="mx-auto media media-hover p-3 p-sm-4 rounded-lg font-droid">
+                                        <div class="media-body">
+                                            <div class="d-sm-flex d-block align-items-center"><a
+                                                    href="/username=<%= user1.username %>"
+                                                    class="d-flex align-items-center w-100 w-sm-75 text-hover-black text-black text-decoration-none"><img
+                                                        width="50" height="50"
+                                                        src="<%= user1.image %> "
+                                                        alt="FG Production" class="rounded-circle">
+                                                    <div class="ms-3">
+                                                        <p class="mb-0 fw-bold">
+                                                            <%= user1.username %>
+                                                        </p>
+                                                        <p class="mb-0 bio"> </p>
+                                                    </div>
+                                                </a>
+                                                <div class="ms-6 mt-2 mt-sm-0 me-sm-auto">
+                                                    <form action="/blogs/<%= user1.username %>/follow" method="post">
+                                                        <button type="submit"
+                                                            class="btn f px-4 font-14px px-4  me-sm-auto mt-4 my-sm-2 btn-primary text-white ">
+                                                            <span class="fw-bold d-flex align-items-center">
+                                                                <i aria-hidden="true" class="fa fa-plus mx-1"></i>
+                                                                follow
+                                                            </span></button>
+                                                    </form>
+
+
+
+
+
+                                                </div>
                                             </div>
-                                        </a>
-                                        <div class="ms-6 mt-2 mt-sm-0 me-sm-auto">
-                                            <form action="/blogs/<%= user.username %>/follow" method="post">
-                                                <button type="submit" class="btn f px-4 font-14px px-4  me-sm-auto mt-4 my-sm-2 btn-primary text-white ">
-                                                  <span class="fw-bold d-flex align-items-center">
-                                                    <i aria-hidden="true" class="fa fa-plus mx-1"></i>
-                                                    تابع 
-                                                  </span></button>
-                                              </form>
-
-
-                                            
-                                        
-                                        
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <% }) %>
-                         <% } else { %>
-                             <p>There are no blogs to display...</p>
-                             <% } %>
+                                    <% } %> 
+                                    <% }) %>
+                                        <% } else { %>
+                                            <p>There are no blogs to display...</p>
+                                            <% } %>
 
-                           
+
                 </div>
 
-                
 
-                
+
+
             </div>
         </div>
     </div>

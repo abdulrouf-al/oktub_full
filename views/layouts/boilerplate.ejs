@@ -3,50 +3,50 @@
 <%- include("../partials/header") %>
 
 
-    <body dir="rtl">
+    <body dir="ltr">
 
         <nav class="navbar padding navbar-expand-lg fw-bolder lead">
             <div class="container-fluid">
 
-                <a href="/homePage" class="navbar-brand fw-bold ">اكتب</a>
+                <a href="/homePage" class="navbar-brand fw-bold mx-3 ">Oktub</a>
                 
                 <div class="d-flex align-items-baseline">
                   
                     <div id="profile-links-btn2" class="position-relative   d-block d-md-none ">
-                        <% if(user){ %>
+                        <% if(currentUser){ %>
                         <a href="#"
                             id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                             class="outline-none dropdown-toggle dropdown-toggle-split text-decoration-none"><img
-                                width="30"
-                                src="<%= user.image %> "
+                                width="40"
+                                src="<%= currentUser.image %> "
                                 alt="sham sham" class="rounded-circle outline-none"></a>
                        
-                            <div id="profile-links2" class="dropdown-menu position-absolute m-1 start-0 text-end"><a
-                                    href="/username=<%= user.username  %> " class="dropdown-item px-3 p-0 py-1 fw-bold ">تدويناتي </a> <a
-                                    href="/likes" class="dropdown-item px-3 p-0 py-1 fw-bold ">المفضلة</a> <a
-                                    href="/settings" class="dropdown-item px-3 p-0 py-1 fw-bold ">الاعدادت</a>
+                            <div id="profile-links2" class="dropdown-menu position-absolute m-1 start-0 end-0"><a
+                                    href="/username=<%= currentUser.username  %> " class="dropdown-item px-3 p-0 py-1 fw-bold ">My Blogs </a> <a
+                                    href="/likes" class="dropdown-item px-3 p-0 py-1 fw-bold ">Favorites</a> <a
+                                    href="/settings" class="dropdown-item px-3 p-0 py-1 fw-bold ">Settings</a>
                                 <a href="/statistics"
-                                    class="dropdown-item px-3 p-0 py-1 fw-bold ">الاحصائيات</a>
+                                    class="dropdown-item px-3 p-0 py-1 fw-bold ">Statistics</a>
                                 <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
-                                    تسجيل الخروج
+                                    Logout
                                 </a>
                                 <div class="border-bottom flex-1 my-2"></div> <a t arget="_blank" href="index.html"
                                     class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
-                                    عن اكتب
+                                 About Oktub
                                 </a> <a target="_blank"
                                     href="https://oktob.io/pages/35906?%D8%B4%D8%B1%D9%88%D8%B7-%D8%A7%D9%84%D9%83%D8%AA%D8%A7%D8%A8%D8%A9"
                                     class="nav-link  fw-bold px-3 p-0 py-1 text-secondary">
-                                    شروط الكتابة
+                                    Writing Conditions 
                                 </a> <a target="_blank"
                                     href="https://oktob.io/pages/35905?%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D8%A7%D9%84%D8%AE%D8%B5%D9%88%D8%B5%D9%8A%D8%A9"
                                     class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
-                                    سياسة الخصوصية
+                                    privacy policy
                                 </a>
                             </div>
                             <% } %>
                     </div><a href="/create"
                         class="btn btn-primary text-white  m-sm-0 px-4 d-block d-md-none  fw-bold">
-                        تدوينة جديدة
+                       new blog
                     </a>
                 </div>
                 <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
@@ -58,17 +58,17 @@
                     <ul class="navbar-nav p-2 mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active  fw-bold" href="/">
-                                <span class="p-0 pb-2 border-3 border-wid border-bottom">أحدث
-                                    المقالات</span></a>
+                                <span class="p-0 pb-2 border-3 border-wid border-bottom">
+                                    blogs</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link  fw-bold" href="/blogs/mostseen">
-                                <span class="p-0 pb-2 border-3 border-wid">الأكثر مشاهدة</span>
+                                <span class="p-0 pb-2 border-3 border-wid"> most viewed</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fw-bold" href="/blogs/newBlogers">
-                                <span class="p-0 pb-2 border-3 border-wid">مدونين جدد </span>
+                                <span class="p-0 pb-2 border-3 border-wid"> new blogers </span>
                             </a>
                         </li>
                     </ul>
@@ -84,43 +84,43 @@
 
                     </form>
                     <a href="/blogs/create"
-                        class="btn btn-primary text-white mb-3 m-sm-0 px-4 d-none d-md-block fw-bold fs-5">
-                        تدوينة جديدة
+                        class="btn btn-primary text-white mb-3 m-sm-0 px-4 d-none d-md-block fw-bold ">
+                       new blog
                     </a> <a href="/"
-                        class="btn bg-white  shadow-sm text-black px-4 mx-3   fw-bolder  d-none d-md-block fs-5">
+                        class="btn bg-white  shadow-sm text-black px-4 mx-3   fw-blod  d-none d-md-block ">
 
-                        اكتشف
+                        explore
                     </a>
                 </div>
-                <% if(user){ %>
+                <% if(currentUser){ %>
                     <div id="profile-links-btn" class="position-relative d-none d-lg-block  d-sm-none d-md-block"><a
                             href="#" id="dropdown-menu-links" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"
                             class="outline-none dropdown-toggle dropdown-toggle-split text-decoration-none"><img
-                                width="30"
-                                src="<%= user.image %> "
+                                width="40"
+                                src="<%= currentUser.image %> "
                                 alt="sham sham" class="rounded-circle outline-none"></a>
-                        <div id="profile-links" class="dropdown-menu position-absolute m-1  start-0 text-end"><a
-                                href="/username=<%= user.username %> " class="dropdown-item px-3 p-0 py-1 fw-bold ">تدويناتي</a> <a
-                                href="/likes" class="dropdown-item px-3 p-0 py-1 fw-bold ">المفضلة</a> <a href="/settings"
-                                class="dropdown-item px-3 p-0 py-1 fw-bold ">الاعدادت</a>
+                        <div id="profile-links" class="dropdown-menu position-absolute m-1 end-0 "><a
+                                href="/username=<%= currentUser.username %> " class="dropdown-item px-3 p-0 py-1 fw-bold ">My Blogs</a> <a
+                                href="/likes" class="dropdown-item px-3 p-0 py-1 fw-bold ">Favorites</a> <a href="/settings"
+                                class="dropdown-item px-3 p-0 py-1 fw-bold ">Settings</a>
                             <a href="/statistics"
-                                class="dropdown-item px-3 p-0 py-1 fw-bold ">الاحصائيات</a>
+                                class="dropdown-item px-3 p-0 py-1 fw-bold ">Statistics</a>
                             <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
-                                تسجيل الخروج
+                               Logout
                             </a>
                             <div class="border-bottom flex-1 my-2 "></div> <a target="_blank"
                                 href="https://oktob.io/pages/35907?%D8%B9%D9%86-%D8%A7%D9%83%D8%AA%D8%A8"
                                 class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
-                                عن اكتب
+                               About Oktub
                             </a> <a target="_blank"
                                 href="https://oktob.io/pages/35906?%D8%B4%D8%B1%D9%88%D8%B7-%D8%A7%D9%84%D9%83%D8%AA%D8%A7%D8%A8%D8%A9"
                                 class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
-                                شروط الكتابة
+                              Writing Conditions
                             </a> <a target="_blank"
                                 href="https://oktob.io/pages/35905?%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D8%A7%D9%84%D8%AE%D8%B5%D9%88%D8%B5%D9%8A%D8%A9"
                                 class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
-                                سياسة الخصوصية
+                               Privacy Policy
                             </a>
                         </div>
                     </div>
