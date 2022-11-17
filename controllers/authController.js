@@ -39,13 +39,16 @@ module.exports.settings_put =catchAsync( async(req, res) => {
   const user = await User.findOneAndUpdate({_id:req.user._id},req.body,{ runValidators: true, new: true })//
   //const { username, email, password } = req.body;
   const blogs = await Blog.find({ user: user });
-  for (let blog of blogs) {
-    blog.userImage = req.file.path;
-    blog.save();
+  if (req.file) {
+    for (let blog of blogs) {
+      blog.userImage = req.file.path;
+      blog.save();
+    }
+    user.image = req.file.path;
+    user.save();
   }
-  user.image = req.file.path;
-  user.save();
   //res.json(req.file);
+  req.flash('success', 'updated');
   res.redirect('back');
 })
 
