@@ -26,7 +26,11 @@
                                     <button type="submit" class="btn  px-4 font-14px px-4  ms-sm-auto mt-4 my-sm-2 btn-primary text-white ">
                                       <span class="fw-bold d-flex align-items-center">
                                         <i aria-hidden="true" class="fa fa-plus mx-1"></i>
+                                        <% if(currentUser && currentUser.following.includes(profileUser._id)) { %> 
+                                            unfollow 
+                                            <% }else { %> 
                                         follow 
+                                        <% } %>  
                                       </span></button>
                                   </form>
                             </div>

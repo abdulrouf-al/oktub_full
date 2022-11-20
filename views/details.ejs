@@ -75,7 +75,12 @@
                   <button type="submit" class="btn f px-4 font-14px px-4  ms-sm-auto mt-4 my-sm-2 btn-primary text-primary bg-white">
                     <span class="fw-bold">
                       <i aria-hidden="true" class="fa fa-plus"></i>
-                     follow the author
+                    
+                     <% if(currentUser && currentUser.following.includes(profileUser._id)) { %> 
+                      unfollow the author 
+                      <% }else { %> 
+                        follow the author 
+                  <% } %>  
                     </span></button>
                 </form>
                 <% } %>

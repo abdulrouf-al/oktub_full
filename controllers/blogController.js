@@ -94,7 +94,6 @@ const blog_create_post = catchAsync(async (req, res) => {
     username: req.user.username,
     seenCounter: 0,
     userImage: req.user.image
-
   });
   await blog.save()
     .then(result => {
@@ -110,32 +109,9 @@ const blog_create_post = catchAsync(async (req, res) => {
 })
 //edit
 
-/* const show = async (req, res, next) => {
-  await Blog.findOne({ slug: req.params.slug })
-    .then(result => {
-      moment.locale('en');
-      var profileUser =
-        User.findOne({ user: result.user }).then(function (result) {
-          console.log('result is : ', result);
-          profileUser = result;
-        })
-      if (!result.seenUsers.includes(req.user._id)) {
-        result.seenUsers.push(req.user._id);
-        result.seenCounter++;
-        result.save();
-      }
-      //console.log(result)
-      console.log("profileUser: ", profileUser)
-      // blog = mongooseToObject(blog);
-      res.render("details", { profileUser, blog: result, moment });
-    })
-    .catch(next);
-} */
-
 const show = catchAsync(async (req, res, next) => {
   const blog = await Blog.findOne({ slug: req.params.slug })
   const profileUser = await User.findOne({ username: blog.username })
-  //console.log(req.user._id)
   if (req.user) {
     if (!blog.seenUsers.includes(req.user._id)) {//req.ip
       blog.seenUsers.push(req.user._id);
@@ -149,9 +125,6 @@ const show = catchAsync(async (req, res, next) => {
       await blog.save();
     }
   }
-  console.log(blog.seenUsers)
-  console.log(blog.seenIp)
-  console.log(blog.seenCounter)
   res.render("details", { profileUser, blog, moment });
 
 })
@@ -202,29 +175,29 @@ catch (err) {
 */
 const blog_follow_username = catchAsync(async (req, res) => {
   const user = await User.findByUsername(req.params.username);
-  console.log(user._id)
-
   if (user._id.equals(req.user._id)) {
     console.log('cant follow your self');
     req.flash('error', 'cant follow your self');
     return res.redirect('back');
   }
-  if (user.followers.length == 0 || !user.followers.includes(req.user._id)) {
-    user.followers.push(req.user._id);
-    req.user.following.push(user);
+  if (!req.user.following.includes(user._id)) {
+    req.user.following.push(user._id);
+    user.followers.push(req.user._id)
     await user.save();
     await req.user.save();
     req.flash('success', 'Followed');
     console.log('followed');
   }
-  else {
-    user.followers.pop(req.user._id);
-    req.user.following.pop(user);
+  else {//unfollow
+    user.followers.splice(user.followers.indexOf(req.user._id),1)
+    req.user.following.splice(req.user.following.indexOf(user._id),1)
     await user.save();
     await req.user.save();
     req.flash('success', 'unFollowed');
     console.log('unFollow');
   }
+  //console.log("***************************")
+  //console.log(req.user.following)
   res.redirect('back');
 });
 
