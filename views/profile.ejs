@@ -1,121 +1,197 @@
-<% layout('/layouts/boilerplate') %> 
+<% layout('/layouts/boilerplate') %>
+
+    <nav class="navbar padding navbar-expand-lg fw-bolder lead">
+        <div class="container-fluid">
+
+            <a href="/homePage" class="navbar-brand fw-bold mx-3 ">Oktub</a>
+
+            <div class="d-flex align-items-baseline">
+
+                <div id="profile-links-btn2" class="position-relative   d-block d-md-none ">
+                    <% if(currentUser){ %>
+                        <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"
+                            class="outline-none dropdown-toggle dropdown-toggle-split text-decoration-none"><img
+                                width="70" src="<%= currentUser.image %> " alt="sham sham"
+                                class="rounded-circle outline-none"></a>
+
+                        <div id="profile-links2" class="dropdown-menu position-absolute m-1 start-0 end-0"><a
+                                href="/username=<%= currentUser.username  %> "
+                                class="dropdown-item px-3 p-0 py-1 fw-bold ">My Blogs </a> <a href="/likes"
+                                class="dropdown-item px-3 p-0 py-1 fw-bold ">Favorites</a> <a href="/settings"
+                                class="dropdown-item px-3 p-0 py-1 fw-bold ">Settings</a>
+                            <a href="/statistics" class="dropdown-item px-3 p-0 py-1 fw-bold ">Statistics</a>
+                            <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
+                                Logout
+                            </a>
+                            <div class="border-bottom flex-1 my-2"></div> <a t arget="_blank" href="/"
+                                class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                                About Oktub
+                            </a> <a target="" href="" class="nav-link  fw-bold px-3 p-0 py-1 text-secondary">
+                                Writing Conditions
+                            </a> <a target="" href="" class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                                privacy policy
+                            </a>
+                        </div>
+                        <% } %>
+                </div><a href="/create" class="btn btn-primary text-white  m-sm-0 px-4 d-block d-md-none  fw-bold">
+                    new blog
+                </a>
+            </div>
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 
+                <form class="d-flex justify-content-center align-items-center me-auto p-2 d-none d-md-flex"
+                role="search" method="POST"  action="/search">
+                <i role="button" id="search-btn"
+                    class="fa fa-search text-secondary mx-1 fw-bold d-sm-none d-md-block pe-auto"></i>
+                <input class="form-control pl-2 pr-2 pb-2  border-secondary focus d-none " id="search-input"
+                    type="search" name="search" placeholder=" " aria-label="Search">
+            </form>
+                <a href="/blogs/create" class="btn btn-primary text-white mb-3 m-sm-0 px-4 d-none d-md-block fw-bold ">
+                    new blog
+                </a> <a href="/" class="btn bg-white  shadow-sm text-black px-4 mx-3   fw-blod  d-none d-md-block ">
+
+                    explore
+                </a>
+            </div>
+            <% if(currentUser){ %>
+                <div id="profile-links-btn" class="position-relative d-none d-lg-block  d-sm-none d-md-block"><a
+                        href="#" id="dropdown-menu-links" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"
+                        class="outline-none dropdown-toggle dropdown-toggle-split text-decoration-none"><img width="50"
+                            src="<%= currentUser.image %> " alt="sham sham" class="rounded-circle outline-none"></a>
+                    <div id="profile-links" class="dropdown-menu position-absolute m-1 end-0 "><a
+                            href="/username=<%= currentUser.username %> "
+                            class="dropdown-item px-3 p-0 py-1 fw-bold ">My Blogs</a> <a href="/likes"
+                            class="dropdown-item px-3 p-0 py-1 fw-bold ">Favorites</a> <a href="/settings"
+                            class="dropdown-item px-3 p-0 py-1 fw-bold ">Settings</a>
+                        <a href="/statistics" class="dropdown-item px-3 p-0 py-1 fw-bold ">Statistics</a>
+                        <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
+                            Logout
+                        </a>
+                        <div class="border-bottom flex-1 my-2 "></div> <a target="" href=""
+                            class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                            About Oktub
+                        </a> <a target="" href="" class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                            Writing Conditions
+                        </a> <a target="" href="" class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                            Privacy Policy
+                        </a>
+                    </div>
+                </div>
+                <script type="text/javascript" src="../../public/js/nav.js"></script>
+                <% } %>
+
+        </div>
+    </nav>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <div>
                     <div class="my-5 d-flex flex-column align-items-center">
-                        
-                        
-                        <img width="75"
-                            src="<%=profileUser.image %>"
-                            alt="sham sham" class="rounded-circle">
+
+
+                        <img width="100px" src="<%=profileUser.image %>" alt="sham sham" class="rounded-circle">
                         <h5 class="mt-2 mb-3 fw-bold">
-                            <%= profileUser.username %> 
-                            <a href="https://twitter.com/nabtob" target="_blank"><i aria-hidden="true"
-                                    class="fa fa-twitter mr-2 text-primary"></i></a>
+                            <%= profileUser.username %>
+                                <a href="#"><i aria-hidden="true" class="fa fa-twitter mr-2 text-primary"></i></a>
                         </h5>
                         <p class="mb-0 fw-bold text-secondary max-w-450px text-center">
-                            
+
                         </p>
                         <div class="mx-auto mt-3 d-flex align-items-center fs-5">
                             <% if(currentUser && profileUser.username==currentUser.username) {} else { %>
-                            <div class=" mx-4 mt-sm-0 me-sm-auto">
-                                <form action="/blogs/<%= profileUser.username %>/follow" method="post">
-                                    <button type="submit" class="btn  px-4 font-14px px-4  ms-sm-auto mt-4 my-sm-2 btn-primary text-white ">
-                                      <span class="fw-bold d-flex align-items-center">
-                                        <i aria-hidden="true" class="fa fa-plus mx-1"></i>
-                                        <% if(currentUser && currentUser.following.includes(profileUser._id)) { %> 
-                                            unfollow 
-                                            <% }else { %> 
-                                        follow 
-                                        <% } %>  
-                                      </span></button>
-                                  </form>
-                            </div>
-                            <% } %> 
-                            <a href="#" data-toggle="modal"
-                                data-target=".followers-modal-lg"
-                                class="fw-bold text-black text-decoration-none m-2">
-                                <%= profileUser.followers.length %>  followers
-                            </a> <span class="mx-2">
-                                |
-                            </span> <a href="#" data-toggle="modal" data-target=".followings-modal-lg"
-                                class="fw-bold text-black text-decoration-none">
-                                <%= profileUser.following.length %> following
-                            </a>
+                                <div class=" mx-4 mt-sm-0 me-sm-auto">
+                                    <form action="/blogs/<%= profileUser.username %>/follow" method="post">
+                                        <button type="submit"
+                                            class="btn  px-4 font-14px px-4  ms-sm-auto mt-4 my-sm-2 btn-primary text-white ">
+                                            <span class="fw-bold d-flex align-items-center">
+                                                <i aria-hidden="true" class="fa fa-plus mx-1"></i>
+                                                <% if(currentUser && currentUser.following.includes(profileUser._id)) {
+                                                    %>
+                                                    unfollow
+                                                    <% }else { %>
+                                                        follow
+                                                        <% } %>
+                                            </span></button>
+                                    </form>
+                                </div>
+                                <% } %>
+                                <!-- Button trigger modal -->
+
+                                    <a href="#" data-toggle="modal" data-target=".followers-modal-lg"
+                                        class="fw-bold text-black text-decoration-none m-2">
+                                        <%= profileUser.followers.length %> followers
+                                    </a> <span class="mx-2">
+                                        |
+                                    </span> <a href="#" data-toggle="modal" data-target=".followings-modal-lg"
+                                        class="fw-bold text-black text-decoration-none">
+                                        <%= profileUser.following.length %> following
+                                    </a>
                         </div>
-                            
+
                     </div>
-                   
+
                     <div class="my-2">
                         <div class="d-flex align-items-center">
                             <p class="fw-bold text-secondary h5">
-                               my blogs
+                                my blogs
                             </p>
                             <div class="mx-3 border-bottom flex-1 w-75"></div>
                         </div>
-                        
+
                     </div>
                 </div>
-                
+
                 <% if (blogs.length> 0) { %>
                     <% blogs.forEach(blog=> { %>
-                       <div class=" mx-auto media media-hover mb-4 mb-sm-0 p-3 p-sm-5 rounded-lg font-droid align-items-center">
+                        <div
+                            class="media-hover mx-auto media media-hover mb-4 mb-sm-0 p-3 p-sm-5 rounded-lg font-droid align-items-center">
                             <a class="text-decoration-none text-black" href="/blogs/post=<%= blog.slug %>">
-                                <h3 class="h3 h-sm-5 mt-0 mb-4 fw-bold text-break"><%= blog.title %>  </h3>
-                           
+                                <h3 class="h3 h-sm-5 mt-0 mb-4 fw-bold text-break">
+                                    <%= blog.title %>
+                                </h3>
+
                                 <p class="d-none d-sm-block text-break fw-normal fs-4">
                                     <%= blog.body.slice(0, 200) %>...
-                                </p> 
+                                </p>
                             </a>
 
-                                <a href="<%= blog.username  %> "
-                                        class="text-decoration-none text-black text-hover-black">
-                                        <div class="d-flex align-items-center">
-                                            <img width="45"
-                                                src="<%= blog.userImage %> "
-                                                alt="Nouf Khalid" class="rounded-circle">
-                                            <div class="mx-3">
-                                                <p class="mb-0 fw-bold"> <%= blog.username %> </p>
-                                                <p class="mb-0 text-secondary fw-bold">
-                                                    <time><%= moment(blog.createdAt).fromNow(); %></time>
-                                                    </p>
-                                            </div>
-                                        </div>
-                                    </a></div>  
-                                
- 
-                                             
-        
-                         <% }) %>
-                         <% } else { %>
-                            <div
-                            class="d-flex flex-column text-center mx-auto my-3 bg-white p-5 rounded-lg font-droid h5">
-                            <p>
-                                لا توجد تدوينات منشورة لديك
-                            </p>
-                            <div id="load-more"></div>
-                            <p>
-                                يمكن أيضًا تصفح
-                                <a href="https://oktob.io/i/explore"  class="text-decoration-none">
-                                    التدوينات الجديدة
-                                </a>
-                            </p>
-                        </div>
-                             <% } %>
-                             <div class="my-5">
-                                <div class="d-flex align-items-center"><span class="fw-bold text-secondary h5">
-                                        المسودات
-                                    </span>
-                                    <div class="mx-3 border-bottom flex-1 w-75"></div>
+                            <a href="<%= blog.username  %> " class="text-decoration-none text-black text-hover-black">
+                                <div class="d-flex align-items-center">
+                                    <img width="45" src="<%= blog.userImage %> " alt="Nouf Khalid"
+                                        class="rounded-circle">
+                                    <div class="mx-3">
+                                        <p class="mb-0 fw-bold">
+                                            <%= blog.username %>
+                                        </p>
+                                        <p class="mb-0 text-secondary fw-bold">
+                                            <time>
+                                                <%= moment(blog.createdAt).fromNow(); %>
+                                            </time>
+                                        </p>
+                                    </div>
                                 </div>
+                            </a>
+                        </div>
+
+
+
+
+                        <% }) %>
+                            <% } else { %>
                                 <div
                                     class="d-flex flex-column text-center mx-auto my-3 bg-white p-5 rounded-lg font-droid h5">
                                     <p>
-                                        لا توجد تدوينات في المسودات
+                                        لا توجد تدوينات منشورة لديك
                                     </p>
+                                    <div id="load-more"></div>
                                     <p>
                                         يمكن أيضًا تصفح
                                         <a href="/" class="text-decoration-none">
@@ -123,7 +199,26 @@
                                         </a>
                                     </p>
                                 </div>
-                            </div>
+                                <% } %>
+                                    <div class="my-5">
+                                        <div class="d-flex align-items-center"><span class="fw-bold text-secondary h5">
+                                                المسودات
+                                            </span>
+                                            <div class="mx-3 border-bottom flex-1 w-75"></div>
+                                        </div>
+                                        <div
+                                            class="d-flex flex-column text-center mx-auto my-3 bg-white p-5 rounded-lg font-droid h5">
+                                            <p>
+                                                لا توجد تدوينات في المسودات
+                                            </p>
+                                            <p>
+                                                يمكن أيضًا تصفح
+                                                <a href="/" class="text-decoration-none">
+                                                    التدوينات الجديدة
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
             </div>
         </div>
     </div>

@@ -8,10 +8,12 @@ const blogSchema = new Schema({
   title: {
     type: String,
     required: true,
+
   },
   body: {
     type: String,
     required: true
+   
   },
   image: { type: String },
   userImage:{ type: String },
@@ -41,7 +43,7 @@ blogSchema.pre("save", function(next) {
   this.slug = this.title.split(" ").join("-");
   next();
 });
-
+blogSchema.index({"$**":"text"});
 const Blog = mongoose.model('Blog', blogSchema); //blog is the collection name without the 's'
 // when created automatically will create (from thin name 'Blog')  => a collection called  'blogs' 
 // the naming here is "*Important*" 

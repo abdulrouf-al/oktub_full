@@ -12,7 +12,9 @@
 
 
 
-//TO Ask when url username or something and go to newBlogers adds it to url  
+//TO Ask when url username or something and go to newBlogers adds it to url
+
+// if i want to add followers/following in profile page I can send all users and check if the id = follower.id display it 
 
 
 /* 

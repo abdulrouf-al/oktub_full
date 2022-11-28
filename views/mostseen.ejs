@@ -25,7 +25,7 @@
                         <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
                             Logout
                         </a>
-                        <div class="border-bottom flex-1 my-2"></div> <a t arget="_blank" href="/"
+                        <div class="border-bottom flex-1 my-2"></div> <a t arget="_blank" href="index.html"
                             class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
                          About Oktub
                         </a> <a target=""
@@ -50,7 +50,23 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            
+            <ul class="navbar-nav p-2 mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link   fw-bold" href="/">
+                        <span  class="p-0 pb-2 border-3 border-wid ">
+                            blogs</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active fw-bold" href="/blogs/mostseen">
+                        <span class="p-0 pb-2 border-3 border-wid border-bottom"> most viewed</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="/blogs/newBlogers">
+                        <span class="p-0 pb-2 border-3 border-wid"> new blogers </span>
+                    </a>
+                </li>
+            </ul>
 
             <form class="d-flex justify-content-center align-items-center me-auto p-2 d-none d-md-flex"
                 role="search" method="POST"  action="/search">
@@ -105,21 +121,12 @@
 
     </div>
 </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
 
-                    <div class="my-5">
-                        <div class="d-flex align-items-center">
-                            <p class="fw-bold text-secondary h5">
-                             favorites blogs
-                            </p>
-                            <div class="mx-3 border-bottom flex-1 w-75"></div>
-                        </div>
-                        
-                    </div>
-                
-                
+    <div class="container" >
+        <div class="row lead">
+            <div class="col-lg-10 mx-auto my-5 ">
+                  
+
                 <% if (blogs.length> 0) { %>
                     <% blogs.forEach(blog=> { %>
                        <div class="media-hover mx-auto media media-hover mb-4 mb-sm-0 p-3 p-sm-5 rounded-lg font-droid align-items-center">
@@ -130,13 +137,15 @@
                                     <%= blog.body.slice(0, 200) %>...
                                 </p> 
                             </a>
-
-                                <a href="/username=<%= blog.username %> "
+                           
+                            <a href="/username=<%= blog.username %>"
                                         class="text-decoration-none text-black text-hover-black">
                                         <div class="d-flex align-items-center">
-                                            <img width="45"
+                                            <img width="60px"
+                                            
                                                 src="<%= blog.userImage %> "
-                                                alt="Nouf Khalid" class="rounded-circle">
+
+                                                alt="<%= blog.userImage %>" class="rounded-circle">
                                             <div class="mx-3">
                                                 <p class="mb-0 fw-bold"> <%= blog.username %> </p>
                                                 <p class="mb-0 text-secondary fw-bold">
@@ -151,20 +160,27 @@
         
                          <% }) %>
                          <% } else { %>
-                            <div
-                            class="d-flex flex-column text-center mx-auto my-3 bg-white p-5 rounded-lg font-droid h5">
-                            <p>
-                               no favorites blogs
-                            </p>
-                            <div id="load-more"></div>
-                            <p>
-                               you can go to 
-                                <a href="/"  class="text-decoration-none">
-                                   recent blogs
-                                </a>
-                            </p>
-                        </div>
+                             <p>There are no blogs to display...</p>
                              <% } %>
             </div>
         </div>
-    </div>
+    </div> 
+ <!--    <div class="blogs content">
+        <h2>All Blogs</h2>
+
+        <% if (blogs.length> 0) { %>
+            <% blogs.forEach(blog=> { %>
+                <a class="single" href="/blogs/<%= blog._id %>">
+                    <h3 class="title">
+                        <%= blog.title %>
+                    </h3>
+                    <p class="snippet">
+                        <%= blog.snippet %>
+                    </p>
+                </a>
+                <% }) %>
+                    <% } else { %>
+                        <p>There are no blogs to display...</p>
+                        <% } %>
+
+    </div> -->

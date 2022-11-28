@@ -1,6 +1,127 @@
 <% layout('/layouts/boilerplate') %> 
 
+<nav class="navbar padding navbar-expand-lg fw-bolder lead">
+    <div class="container-fluid">
 
+        <a href="/homePage" class="navbar-brand fw-bold mx-3 ">Oktub</a>
+        
+        <div class="d-flex align-items-baseline">
+          
+            <div id="profile-links-btn2" class="position-relative   d-block d-md-none ">
+                <% if(currentUser){ %>
+                <a href="#"
+                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    class="outline-none dropdown-toggle dropdown-toggle-split text-decoration-none"><img
+                        width="50"
+                        src="<%= currentUser.image %> "
+                        alt="sham sham" class="rounded-circle outline-none"></a>
+               
+                    <div id="profile-links2" class="dropdown-menu position-absolute m-1 start-0 end-0"><a
+                            href="/username=<%= currentUser.username  %> " class="dropdown-item px-3 p-0 py-1 fw-bold ">My Blogs </a> <a
+                            href="/likes" class="dropdown-item px-3 p-0 py-1 fw-bold ">Favorites</a> <a
+                            href="/settings" class="dropdown-item px-3 p-0 py-1 fw-bold ">Settings</a>
+                        <a href="/statistics"
+                            class="dropdown-item px-3 p-0 py-1 fw-bold ">Statistics</a>
+                        <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
+                            Logout
+                        </a>
+                        <div class="border-bottom flex-1 my-2"></div> <a t arget="_blank" href="/"
+                            class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                         About Oktub
+                        </a> <a target=""
+                            href=""
+                            class="nav-link  fw-bold px-3 p-0 py-1 text-secondary">
+                            Writing Conditions 
+                        </a> <a target=""
+                            href=""
+                            class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                            privacy policy
+                        </a>
+                    </div>
+                    <% } %>
+            </div><a href="/create"
+                class="btn btn-primary text-white  m-sm-0 px-4 d-block d-md-none  fw-bold">
+               new blog
+            </a>
+        </div>
+        <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav p-2 mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active  fw-bold" href="/">
+                        <span  class="p-0 pb-2 border-3 border-wid border-bottom">
+                            blogs</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  fw-bold" href="/blogs/mostseen">
+                        <span class="p-0 pb-2 border-3 border-wid"> most viewed</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="/blogs/newBlogers">
+                        <span class="p-0 pb-2 border-3 border-wid"> new blogers </span>
+                    </a>
+                </li>
+            </ul>
+
+            <form class="d-flex justify-content-center align-items-center me-auto p-2 d-none d-md-flex"
+                role="search" method="POST"  action="/search">
+                <i role="button" id="search-btn"
+                    class="fa fa-search text-secondary mx-1 fw-bold d-sm-none d-md-block pe-auto"></i>
+                <input class="form-control pl-2 pr-2 pb-2  border-secondary focus d-none " id="search-input"
+                    type="search" name="search" placeholder=" " aria-label="Search">
+            </form>
+
+            <a href="/blogs/create"
+                class="btn btn-primary text-white mb-3 m-sm-0 px-4 d-none d-md-block fw-bold ">
+               new blog
+            </a> <a href="/"
+                class="btn bg-white  shadow-sm text-black px-4 mx-3   fw-blod  d-none d-md-block ">
+
+                explore
+            </a>
+        </div>
+        <% if(currentUser){ %>
+            <div id="profile-links-btn" class="position-relative d-none d-lg-block  d-sm-none d-md-block"><a
+                    href="#" id="dropdown-menu-links" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"
+                    class="outline-none dropdown-toggle dropdown-toggle-split text-decoration-none"><img
+                        width="50"
+                        src="<%= currentUser.image %> "
+                        alt="sham sham" class="rounded-circle outline-none"></a>
+                <div id="profile-links" class="dropdown-menu position-absolute m-1 end-0 "><a
+                        href="/username=<%= currentUser.username %> " class="dropdown-item px-3 p-0 py-1 fw-bold ">My Blogs</a> <a
+                        href="/likes" class="dropdown-item px-3 p-0 py-1 fw-bold ">Favorites</a> <a href="/settings"
+                        class="dropdown-item px-3 p-0 py-1 fw-bold ">Settings</a>
+                    <a href="/statistics"
+                        class="dropdown-item px-3 p-0 py-1 fw-bold ">Statistics</a>
+                    <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
+                       Logout
+                    </a>
+                    <div class="border-bottom flex-1 my-2 "></div> <a target=""
+                        href=""
+                        class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                       About Oktub
+                    </a> <a target=""
+                        href=""
+                        class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                      Writing Conditions
+                    </a> <a target=""
+                        href=""
+                        class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                       Privacy Policy
+                    </a>
+                </div>
+            </div>
+            <script type="text/javascript" src="../../public/js/nav.js"></script>
+            <% } %>
+
+    </div>
+</nav>
 
     <div class="container" >
         <div class="row lead">
@@ -9,7 +130,7 @@
 
                 <% if (blogs.length> 0) { %>
                     <% blogs.forEach(blog=> { %>
-                       <div class=" mx-auto media media-hover mb-4 mb-sm-0 p-3 p-sm-5 rounded-lg font-droid align-items-center">
+                       <div class="media-hover mx-auto media media-hover mb-4 mb-sm-0 p-3 p-sm-5 rounded-lg font-droid align-items-center">
                             <a class="text-decoration-none text-black" href="/blogs/post=<%= blog.slug %>">
                                 <h3 class="h3 h-sm-5 mt-0 mb-4 fw-bold text-break"><%= blog.title %>  </h3>
                            
@@ -21,7 +142,7 @@
                             <a href="/username=<%= blog.username %>"
                                         class="text-decoration-none text-black text-hover-black">
                                         <div class="d-flex align-items-center">
-                                            <img width="45"
+                                            <img width="60px"
                                             
                                                 src="<%= blog.userImage %> "
 

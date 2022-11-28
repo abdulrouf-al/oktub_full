@@ -21,7 +21,7 @@ const blog_mostSeen = catchAsync(async (req, res) => {
   // console.log(users[0].image)
   moment.locale('en');
   //console.log(result)
-  res.render('blogs', { blogs: blog, moment });
+  res.render('mostseen', { blogs: blog, moment });
 })
 
 //blogs
@@ -83,13 +83,41 @@ const blog_index = catchAsync(async (req, res) => {
 const blog_create_get = (req, res) => {
   res.render('create');
 }
+
+var QuillDeltaToHtmlConverter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+
+const { convertDeltaToHtml  } = require('node-quill-converter');
+/* const Quill = require("quill");
+var quill = new Quill('#editor-container', {
+  modules: {
+    toolbar: [
+      ['bold', 'italic'],
+      ['link', 'blockquote', 'code-block', 'image'],
+      [{ list: 'ordered' }, { list: 'bullet' }]
+    ]
+  },
+  placeholder: 'Compose an epic...',
+  theme: 'snow'
+}); */
 //post
 const blog_create_post = catchAsync(async (req, res) => {
+  
+ 
+  var cfg = {};
+  const decoded = JSON.parse(decodeURIComponent(req.body.body));
+  var converter = new QuillDeltaToHtmlConverter(decoded.ops);
+  
+  let delta = convertDeltaToHtml(decoded);
+  var html = converter.convert();
+  console.log(req.body.body)
+  console.log("****************************")
+  console.log(converter)
+  console.log("html: " , html)
   //const user = new mongoose.Types.ObjectId();
   // const blog = new Blog(req.body,user );
   const blog = new Blog({
     title: req.body.title,
-    body: req.body.body,
+    body:html,
     user: req.user._id,
     username: req.user.username,
     seenCounter: 0,
@@ -98,9 +126,12 @@ const blog_create_post = catchAsync(async (req, res) => {
   await blog.save()
     .then(result => {
       req.flash('success', 'Your blog has been created');
-      res.redirect('/blogs');
+      //res.render("details", { profileUser:req.user, blog, moment });
+      res.redirect(`/blogs/post=${ result.slug }`)
     })
     .catch(err => {
+      req.flash('error', 'something went wrong');
+
       console.log(err);
     });
   const user1 = await User.findById(req.user._id);
@@ -112,11 +143,13 @@ const blog_create_post = catchAsync(async (req, res) => {
 const show = catchAsync(async (req, res, next) => {
   const blog = await Blog.findOne({ slug: req.params.slug })
   const profileUser = await User.findOne({ username: blog.username })
+
+  const blogs = await Blog.find({ user: profileUser }).sort({ createdAt: -1 }).limit(5)
   if (req.user) {
     if (!blog.seenUsers.includes(req.user._id)) {//req.ip
       blog.seenUsers.push(req.user._id);
       blog.seenCounter++;
-     await blog.save();
+      await blog.save();
     }
   } else {
     if (!blog.seenIp.includes(req.ip)) {
@@ -125,13 +158,15 @@ const show = catchAsync(async (req, res, next) => {
       await blog.save();
     }
   }
-  res.render("details", { profileUser, blog, moment });
+  /* console.log("before: ", blog.body)
+  blog.body=quill.getContents(blog.body)
+  console.log("after: ",blog.body) */
+  
+  res.render("details", { profileUser, blog, moment, blogs });
 
 })
 //blog_edit
 const blog_edit = catchAsync(async (req, res, next) => {
-
-  console.log('hello');
   const blog = await Blog.findOne({ slug: req.params.slug }).exec()
     .then(result => {
       res.render('edit', { blog: result, });
@@ -156,9 +191,13 @@ const blog_update = catchAsync(async (req, res) => {
 
       //Blog.updateOne().exec();
       console.log(result.slug);
+      req.flash('success', 'updated successfully');
+
       res.redirect(`/blogs/post=${ result.slug }`)//      res.redirect(`/blogs/${blog.id}`);
 
     }).catch(err => {
+      req.flash('error', 'something went wrong');
+
       console.log(err);
     });
 });
@@ -189,8 +228,8 @@ const blog_follow_username = catchAsync(async (req, res) => {
     console.log('followed');
   }
   else {//unfollow
-    user.followers.splice(user.followers.indexOf(req.user._id),1)
-    req.user.following.splice(req.user.following.indexOf(user._id),1)
+    user.followers.splice(user.followers.indexOf(req.user._id), 1)
+    req.user.following.splice(req.user.following.indexOf(user._id), 1)
     await user.save();
     await req.user.save();
     req.flash('success', 'unFollowed');
@@ -225,8 +264,8 @@ const blog_follow_username = catchAsync(async (req, res) => {
   }); */
 
 
-const newBlogers = catchAsync( async (req, res) => {
- await User.find().sort({ createdAt: -1 })//.populate('user', 'username')
+const newBlogers = catchAsync(async (req, res) => {
+  await User.find().sort({ createdAt: -1 })//.populate('user', 'username')
     .then(result => {
       //moment.locale('ar');
       res.render('newBlogers', { users: result });
@@ -244,6 +283,8 @@ const blog_like = catchAsync(async (req, res) => {
     req.user.likes.push(blog);
     await blog.save();
     await req.user.save();
+    req.flash('success', 'liked');
+
     console.log('like');
   }
   else {
@@ -252,6 +293,8 @@ const blog_like = catchAsync(async (req, res) => {
     await blog.save();
     await req.user.save();
     console.log('unlike');
+    req.flash('success', 'unlike');
+
   }
   res.redirect('back');
 });
@@ -261,9 +304,13 @@ const blog_delete = catchAsync(async (req, res) => {
   await Blog.findOneAndDelete({ slug: req.params.slug })
     .then(result => {
       // result.deleteOne();
+      req.flash('success', 'deleted');
+
       res.redirect('/');
     })
     .catch(err => {
+      req.flash('error', 'something went wrong');
+
       console.log(err);
     });
 })

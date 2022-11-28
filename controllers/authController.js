@@ -60,7 +60,8 @@ module.exports.settings_get = (req, res) => {
 
 module.exports.profile_get = async (req, res) => {
   const profileUser = await User.findOne({ username: req.params.username})
-  const blogs = await Blog.find({ user: profileUser}).sort({ createdAt: -1 })
+  const blogs = await Blog.find({ user: profileUser}).sort({ createdAt: -1 })//.skip(20)
+  .limit(10)
   moment.locale('en');
   res.render("profile", { profileUser, blogs, moment });
   //res.render('profile',{user:req.user,blog: result ,moment: moment});
@@ -106,6 +107,18 @@ module.exports.login_post = (req, res) => {
   delete req.session.returnTo;
   res.redirect(redirectUrl);
   //res.redirect('/');
+};
+
+module.exports.search = async (req, res) => {
+  console.log(req.body)
+
+    const blogs = await Blog.find({ $text: { $search: req.body.search } })
+      //.skip(20)
+      .limit(10)
+    
+    moment.locale('en');
+    res.render('blogs', { blogs, moment });
+   
 };
 
 /*   passport.authenticate('local',

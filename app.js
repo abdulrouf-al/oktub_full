@@ -5,6 +5,7 @@
 //console.log(process.env.dbURI)
 const express = require('express');
 const mongoose = require('mongoose');
+const Swal = require('sweetalert2')
 
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
@@ -270,4 +271,3 @@ mongoose.connect(process.env.dbUrl||'mongodb+srv://abd:text1234@nodetuts.w28wcbw
 
 
 // "start": "npm run serve",
-

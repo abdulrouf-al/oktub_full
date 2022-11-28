@@ -4,162 +4,65 @@
 
 
     <body dir="ltr">
+        <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-        <nav class="navbar padding navbar-expand-lg fw-bolder lead">
-            <div class="container-fluid">
-
-                <a href="/homePage" class="navbar-brand fw-bold mx-3 ">Oktub</a>
-                
-                <div class="d-flex align-items-baseline">
+        <% if(error && error.length> 0){ %>
+            <script>
+                const message="<%= error %>";
+                Swal.fire({
+                    icon: 'error',
+                    title: message,
                   
-                    <div id="profile-links-btn2" class="position-relative   d-block d-md-none ">
-                        <% if(currentUser){ %>
-                        <a href="#"
-                            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            class="outline-none dropdown-toggle dropdown-toggle-split text-decoration-none"><img
-                                width="40"
-                                src="<%= currentUser.image %> "
-                                alt="sham sham" class="rounded-circle outline-none"></a>
-                       
-                            <div id="profile-links2" class="dropdown-menu position-absolute m-1 start-0 end-0"><a
-                                    href="/username=<%= currentUser.username  %> " class="dropdown-item px-3 p-0 py-1 fw-bold ">My Blogs </a> <a
-                                    href="/likes" class="dropdown-item px-3 p-0 py-1 fw-bold ">Favorites</a> <a
-                                    href="/settings" class="dropdown-item px-3 p-0 py-1 fw-bold ">Settings</a>
-                                <a href="/statistics"
-                                    class="dropdown-item px-3 p-0 py-1 fw-bold ">Statistics</a>
-                                <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
-                                    Logout
-                                </a>
-                                <div class="border-bottom flex-1 my-2"></div> <a t arget="_blank" href="index.html"
-                                    class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
-                                 About Oktub
-                                </a> <a target="_blank"
-                                    href="https://oktob.io/pages/35906?%D8%B4%D8%B1%D9%88%D8%B7-%D8%A7%D9%84%D9%83%D8%AA%D8%A7%D8%A8%D8%A9"
-                                    class="nav-link  fw-bold px-3 p-0 py-1 text-secondary">
-                                    Writing Conditions 
-                                </a> <a target="_blank"
-                                    href="https://oktob.io/pages/35905?%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D8%A7%D9%84%D8%AE%D8%B5%D9%88%D8%B5%D9%8A%D8%A9"
-                                    class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
-                                    privacy policy
-                                </a>
-                            </div>
-                            <% } %>
-                    </div><a href="/create"
-                        class="btn btn-primary text-white  m-sm-0 px-4 d-block d-md-none  fw-bold">
-                       new blog
-                    </a>
-                </div>
-                <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav p-2 mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active  fw-bold" href="/">
-                                <span class="p-0 pb-2 border-3 border-wid border-bottom">
-                                    blogs</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  fw-bold" href="/blogs/mostseen">
-                                <span class="p-0 pb-2 border-3 border-wid"> most viewed</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold" href="/blogs/newBlogers">
-                                <span class="p-0 pb-2 border-3 border-wid"> new blogers </span>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <form class="d-flex justify-content-center align-items-center me-auto p-2 d-none d-md-flex"
-                        role="search">
-                        <i role="button" id="search-btn"
-                            class="fa fa-search text-secondary mx-1 fw-bold d-sm-none d-md-block pe-auto"></i>
-                        <input class="form-control pl-2 pr-2 pb-2  border-secondary focus d-none " id="search-input"
-                            type="search" placeholder=" " aria-label="Search">
-                        <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-
-
-                    </form>
-                    <a href="/blogs/create"
-                        class="btn btn-primary text-white mb-3 m-sm-0 px-4 d-none d-md-block fw-bold ">
-                       new blog
-                    </a> <a href="/"
-                        class="btn bg-white  shadow-sm text-black px-4 mx-3   fw-blod  d-none d-md-block ">
-
-                        explore
-                    </a>
-                </div>
-                <% if(currentUser){ %>
-                    <div id="profile-links-btn" class="position-relative d-none d-lg-block  d-sm-none d-md-block"><a
-                            href="#" id="dropdown-menu-links" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"
-                            class="outline-none dropdown-toggle dropdown-toggle-split text-decoration-none"><img
-                                width="40"
-                                src="<%= currentUser.image %> "
-                                alt="sham sham" class="rounded-circle outline-none"></a>
-                        <div id="profile-links" class="dropdown-menu position-absolute m-1 end-0 "><a
-                                href="/username=<%= currentUser.username %> " class="dropdown-item px-3 p-0 py-1 fw-bold ">My Blogs</a> <a
-                                href="/likes" class="dropdown-item px-3 p-0 py-1 fw-bold ">Favorites</a> <a href="/settings"
-                                class="dropdown-item px-3 p-0 py-1 fw-bold ">Settings</a>
-                            <a href="/statistics"
-                                class="dropdown-item px-3 p-0 py-1 fw-bold ">Statistics</a>
-                            <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
-                               Logout
-                            </a>
-                            <div class="border-bottom flex-1 my-2 "></div> <a target="_blank"
-                                href="https://oktob.io/pages/35907?%D8%B9%D9%86-%D8%A7%D9%83%D8%AA%D8%A8"
-                                class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
-                               About Oktub
-                            </a> <a target="_blank"
-                                href="https://oktob.io/pages/35906?%D8%B4%D8%B1%D9%88%D8%B7-%D8%A7%D9%84%D9%83%D8%AA%D8%A7%D8%A8%D8%A9"
-                                class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
-                              Writing Conditions
-                            </a> <a target="_blank"
-                                href="https://oktob.io/pages/35905?%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D8%A7%D9%84%D8%AE%D8%B5%D9%88%D8%B5%D9%8A%D8%A9"
-                                class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
-                               Privacy Policy
-                            </a>
-                        </div>
-                    </div>
-                    <script type="text/javascript" src="../../public/js/nav.js"></script>
+                    timer: 1500
+                })
+            </script>
+            <% } %>
+                <% if(success && success.length> 0){ %>
+                    <script>
+                           const message2="<%= success %>";
+                        Swal.fire({
+                            icon: 'success',
+                            title: message2,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    </script>
                     <% } %>
 
-            </div>
-        </nav>
+                        <!-- <div class="container w-50">
 
-        <div class="container w-50">
-
-            <% if(error && error.length> 0){ %>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <%= error %>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <% } %>
-                    <% if(success && success.length> 0){ %>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <%= success %>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <% if(error && error.length> 0){ %>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <%= error %>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                                <% } %>
+                                    <% if(success && success.length> 0){ %>
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <%= success %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <% } %>
                         </div>
-                        <% } %>
-        </div>
-
-        <%- body %>
-
-            <%- include("../partials/footer.ejs") %>
+ -->
+                        <%- body %>
 
 
-                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-                    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-                    crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-                    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-                    crossorigin="anonymous"></script>
+
+
+                            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+                                integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+                                crossorigin="anonymous"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+                                integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+                                crossorigin="anonymous"></script>
 
 
 
     </body>
+    <%- include("../partials/footer.ejs") %>
 
 </html>

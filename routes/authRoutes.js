@@ -20,6 +20,7 @@ router.put('/settings',isLoggedIn,upload.single('imageInput'), authController.se
 
 router.get('/signup', authController.signup_get);
 router.post('/signup', authController.signup_post);
+router.post('/search', authController.search);
 router.get('/login',  authController.login_get);
 router.post('/login',
 passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' ,keepSessionInfo: true}),

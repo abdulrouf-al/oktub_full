@@ -1,5 +1,111 @@
 <% layout('/layouts/boilerplate') %>
     <main>
+
+        <nav class="navbar padding navbar-expand-lg fw-bolder lead">
+            <div class="container-fluid">
+        
+                <a href="/homePage" class="navbar-brand fw-bold mx-3 ">Oktub</a>
+                
+                <div class="d-flex align-items-baseline">
+                  
+                    <div id="profile-links-btn2" class="position-relative   d-block d-md-none ">
+                        <% if(currentUser){ %>
+                        <a href="#"
+                            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            class="outline-none dropdown-toggle dropdown-toggle-split text-decoration-none"><img
+                                width="50"
+                                src="<%= currentUser.image %> "
+                                alt="sham sham" class="rounded-circle outline-none"></a>
+                       
+                            <div id="profile-links2" class="dropdown-menu position-absolute m-1 start-0 end-0"><a
+                                    href="/username=<%= currentUser.username  %> " class="dropdown-item px-3 p-0 py-1 fw-bold ">My Blogs </a> <a
+                                    href="/likes" class="dropdown-item px-3 p-0 py-1 fw-bold ">Favorites</a> <a
+                                    href="/settings" class="dropdown-item px-3 p-0 py-1 fw-bold ">Settings</a>
+                                <a href="/statistics"
+                                    class="dropdown-item px-3 p-0 py-1 fw-bold ">Statistics</a>
+                                <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
+                                    Logout
+                                </a>
+                                <div class="border-bottom flex-1 my-2"></div> <a t arget="_blank" href="index.html"
+                                    class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                                 About Oktub
+                                </a> <a target=""
+                                    href=""
+                                    class="nav-link  fw-bold px-3 p-0 py-1 text-secondary">
+                                    Writing Conditions 
+                                </a> <a target=""
+                                    href=""
+                                    class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                                    privacy policy
+                                </a>
+                            </div>
+                            <% } %>
+                    </div><a href="/create"
+                        class="btn btn-primary text-white  m-sm-0 px-4 d-block d-md-none  fw-bold">
+                       new blog
+                    </a>
+                </div>
+                <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                   
+                    <form class="d-flex justify-content-center align-items-center me-auto p-2 d-none d-md-flex"
+                    role="search" method="POST"  action="/search">
+                    <i role="button" id="search-btn"
+                        class="fa fa-search text-secondary mx-1 fw-bold d-sm-none d-md-block pe-auto"></i>
+                    <input class="form-control pl-2 pr-2 pb-2  border-secondary focus d-none " id="search-input"
+                        type="search" name="search" placeholder=" " aria-label="Search">
+                </form>
+                    <a href="/blogs/create"
+                        class="btn btn-primary text-white mb-3 m-sm-0 px-4 d-none d-md-block fw-bold ">
+                       new blog
+                    </a> <a href="/"
+                        class="btn bg-white  shadow-sm text-black px-4 mx-3   fw-blod  d-none d-md-block ">
+        
+                        explore
+                    </a>
+                </div>
+                <% if(currentUser){ %>
+                    <div id="profile-links-btn" class="position-relative d-none d-lg-block  d-sm-none d-md-block"><a
+                            href="#" id="dropdown-menu-links" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"
+                            class="outline-none dropdown-toggle dropdown-toggle-split text-decoration-none"><img
+                                width="50"
+                                src="<%= currentUser.image %> "
+                                alt="sham sham" class="rounded-circle outline-none"></a>
+                        <div id="profile-links" class="dropdown-menu position-absolute m-1 end-0 "><a
+                                href="/username=<%= currentUser.username %> " class="dropdown-item px-3 p-0 py-1 fw-bold ">My Blogs</a> <a
+                                href="/likes" class="dropdown-item px-3 p-0 py-1 fw-bold ">Favorites</a> <a href="/settings"
+                                class="dropdown-item px-3 p-0 py-1 fw-bold ">Settings</a>
+                            <a href="/statistics"
+                                class="dropdown-item px-3 p-0 py-1 fw-bold ">Statistics</a>
+                            <a href="/logout" class="dropdown-item px-3 p-0 py-1 fw-bold">
+                               Logout
+                            </a>
+                            <div class="border-bottom flex-1 my-2 "></div> <a target=""
+                                href=""
+                                class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                               About Oktub
+                            </a> <a target=""
+                                href=""
+                                class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                              Writing Conditions
+                            </a> <a target=""
+                                href=""
+                                class="nav-link fw-bold px-3 p-0 py-1 text-secondary">
+                               Privacy Policy
+                            </a>
+                        </div>
+                    </div>
+                    <script type="text/javascript" src="../../public/js/nav.js"></script>
+                    <% } %>
+        
+            </div>
+        </nav>
+        
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -9,19 +115,20 @@
                             </span>
                             <div class="ml-3 border-bottom flex-1"></div>
                         </div>
+
+
                         <form method="POST"  action="/settings?_method=PUT" enctype="multipart/form-data" class="col-lg-10 px-0">
                             <input type="hidden" name="_token" value="HfRWnIdEHwfXvcqZOLP6RhKzjARGvlEahU6Z2hcq">
                             <input type="hidden" name="_method" value="PATCH">
                             <div class="form-group mb-4">
-                                <div class="avatar-wrapper mx-auto shadow">
-                                    <img src="<%= user.image %>" width="200px" height="200px"
-                                        alt="<%= user.username  %>" class="profile-pic">
-                                    <div class="upload-button"><strong class="profile-pic-overlay-image"><i
-                                                aria-hidden="true"
-                                                class="profile-pic-camera-icon fa fa-camera text-white"></i></strong>
-                                    </div> 
-                                    <input  type="file" name="imageInput"  class="file-upload">
-                                </div>
+                                <div class="profile-pic">
+                                    <label class="-label" for="file">
+                                      <span class="glyphicon glyphicon-camera"></span>
+                                      <span>Change Image</span>
+                                    </label>
+                                    <input name="imageInput" id="file" type="file" onchange="loadFile(event)"/>
+                                    <img src="<%= user.image %> " id="output" width="200" />
+                                  </div>
                             </div>
                             <div class="form-group mb-4">
                                 <input type="text" id="name" required="required" name="username"
@@ -30,7 +137,7 @@
                             </div>
                             <div class="form-group mb-4">
                                 <input id="bio" name="bio" required="required" rows="3" placeholder="bio"
-                                 value=" <%= user.bio %>"   class="form-control background-body-bg-color">
+                                 value="<%= user.bio %>"   class="form-control background-body-bg-color">
                                
                             </div>
                             <div class="d-flex mb-4 align-items-center"><span
@@ -44,7 +151,7 @@
                                     class="form-control background-body-bg-color "></div>
                             <div class="form-group mb-4">
                                 <input type="password" id="password" name="password" placeholder="password" class="form-control background-body-bg-color"></div>
-                            <button class="btn btn-primary text-white px-4 font-weight-bold">
+                            <button class="btn btn-primary text-white px-4fw-bold">
                                 save
                             </button>
                         </form>
@@ -55,15 +162,15 @@
                             </span>
                             <div class="ml-3 border-bottom flex-1"></div>
                         </div> <a href="/" data-toggle="tooltip" data-placement="top" title=""
-                            class="btn btn-primary shadow-sm text-white font-weight-bold mr-3 px-4"
+                            class="btn btn-primary shadow-sm text-white fw-bold mr-3 px-4"
                             data-original-title="nabtob">
                             reconnect with Twitter
                         </a>
                         <div class="d-flex mt-4"><a href="/"
-                                class="btn bg-light-secondary shadow-sm text-dark font-weight-bold mr-3 px-4">download
+                                class="btn bg-light-secondary shadow-sm text-darkfw-bold mr-3 px-4">download
                                 blogs
                             </a> <button type="submit"
-                                class="delete-account-btn btn bg-white shadow-sm text-danger font-weight-bold px-4">
+                                class="delete-account-btn btn bg-white shadow-sm text-dangerfw-bold px-4">
                                 delete account
                             </button>
                             <form method="POST" action="/" class="delete-account-form"><input type="hidden"
@@ -76,3 +183,10 @@
             </div>
         </div>
     </main>
+
+   <script >
+    var loadFile = function (event) {
+  var image = document.getElementById("output");
+  image.src = URL.createObjectURL(event.target.files[0]);
+};
+   </script> 
